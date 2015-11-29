@@ -156,6 +156,14 @@ function addModalPicEvent(pic) {
 }
 
 /**
+ * Sets the url for the profile pic
+ */
+function setProfilePicUrl(url){
+    var profilePic = $('#profile-picture');
+    profilePic.attr('src', url);
+}
+
+/**
  * Sets the url to the iframe containing the follow widget
  */
 function setFollowWidgetUrl(url) {
