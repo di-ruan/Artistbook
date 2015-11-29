@@ -8,7 +8,52 @@
         <link rel="stylesheet" href="css/styles.css" />
     </head>
     <body>
-        <div></div>        
+        <div id="main-nav-bar">
+            <div class="x-logo-container">
+                <img class="x-logo" src="img/logo.png" alt="Spotartist logo"/>
+            </div>
+            <div class="x-help-button-container" >
+                <a id="help-button" title="Click this button for help"></a>
+            </div>
+            <div class="x-search-container">
+                <input type="text" id="main-search" placeholder="Enter your search term here..."/>
+            </div>
+        </div>
+        <div class="x-main-wrapper">
+            <div class="x-main-wrapper-inner">
+                <div id="main-left-pane">
+                    <ul class="x-tabs" data-content-holder="left-pane-tab-content">
+                        <li class="x-tab x-active" id="following-tab" data-content="following-tab-content">
+                            Following
+                            <span class="x-active-marker"></span>
+                        </li>
+                        <li class="x-tab" id="history-tab" data-content="history-tab-content">
+                            History
+                            <span class="x-active-marker"></span>
+                        </li>
+                        <li class="x-tab" id="search-results-tab" data-content="search-results-tab-content">
+                            Search results
+                            <span class="x-active-marker"></span>
+                        </li>
+                    </ul>
+                    
+                    <div id="left-pane-tab-content">
+                        <div id="following-tab-content" class="x-tab-content x-active">
+                            Following tab!                            
+                        </div>
+                        <div id="history-tab-content" class="x-tab-content">
+                            History tab!
+                        </div>
+                        <div id="search-results-tab-content" class="x-tab-content">
+                            Search tab!
+                        </div>
+                    </div>
+                </div>
+                <div id="main-right-pane">
+                    
+                </div>
+            </div>
+        </div>
         <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/app.js"></script>
     </body>

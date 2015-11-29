@@ -1,0 +1,150 @@
+
+html, body {
+    background-color: #e9eaed;
+}
+
+input[type=text] {
+    padding: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+
+#main-nav-bar {
+    width: 100%;
+    height: 50px;
+    background-color: #222;
+    overflow: hidden;
+}
+
+#main-nav-bar .x-logo-container {
+    float: left;
+    height: 100%;    
+}
+
+#main-nav-bar .x-logo-container .x-logo {
+    height: 45px;
+    margin-top: 2px;
+}
+
+.x-help-button-container {
+    float: right;
+}
+
+.x-search-container {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#main-search {
+    margin-top: 4px;
+    width: 100%;
+}
+
+#help-button {
+    display: inline-block;
+    margin-top: 8px;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    background-image: url(icons/icon-help.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.x-main-wrapper {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+}
+
+.x-main-wrapper-inner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+/* Tabs start */
+ul.x-tabs {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;    
+    background-color: #fff;
+    border-left: 1px solid #aaa;
+    height: 38px;
+}
+
+ul.x-tabs li.x-tab {
+    float: left;
+    display: block;
+    list-style: none;
+    cursor: pointer;
+    padding: 10px;
+    border-right: 1px solid #aaa;
+    margin: 0;
+    color: #3b5998;
+    position: relative;    
+}
+
+.x-tab-content {
+    display: none;
+}
+
+.x-tab-content.x-active{
+    display: block;    
+}
+
+ul.x-tabs li.x-tab.x-active {
+    color: #373e4d;
+    cursor: default;
+}
+
+ul.x-tabs .x-active-marker {
+    display: none;
+}
+
+ul.x-tabs li.x-tab.x-active .x-active-marker {    
+    background-image: url(icons/fb-icons.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: -52px -401px;
+    bottom: -1px;
+    display: block;
+    height: 9px;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 17px;
+}
+/* Tabs end */
+
+
+#main-left-pane {
+    float: left;
+    width: 350px;
+    overflow: hidden;
+    border-right: 1px solid #aaa;
+    height: 100%;
+    position: relative;
+}
+
+#left-pane-tab-content {
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    width: 100%;
+}
+
+#left-pane-tab-content .x-tab-content{
+    height: 100%;
+    width: 100%;
+}
+
+#main-right-pane {
+    overflow: hidden;
+}
