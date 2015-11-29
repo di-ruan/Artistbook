@@ -22,6 +22,7 @@ $(document).ready(function(){
    initTabs();
    initPicModal();
    initProfilePic();
+   initSearchBar();
 });
 
 /**
@@ -175,4 +176,41 @@ function setFollowWidgetUrl(url) {
  */
 function setPlayWidgetUrl(url) {
     $('iframe#play-widget').attr('src', url);
+}
+
+function initSearchBar() {
+    var searchBar = $('#main-search'),
+        timeoutId = null,
+        searchTerm = '';
+    
+    searchBar.on("input change keyup paste", function() {                 
+       if (timeoutId) {
+           clearTimeout(timeoutId);
+       }
+       
+       timeoutId = setTimeout(function(){
+           timeoutId = null;
+           
+           var searchVal = searchBar.val();           
+           
+           if (searchTerm == searchVal) {
+               return;
+           }
+           
+           searchTerm = searchVal;
+           
+           if (!searchTerm) {               
+               return;
+           }
+           
+           doSearch(searchTerm);
+       }, 500);
+    });
+}
+
+/**
+ * @TODO Make AJAX request to search
+ */
+function doSearch(searchTerm) {
+    console.log(searchTerm);
 }
