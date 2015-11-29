@@ -3,6 +3,10 @@ html, body {
     background-color: #e9eaed;
 }
 
+body {
+    min-width: 940px;
+}
+
 input[type=text] {
     padding: 10px;
     border-radius: 12px;
@@ -59,6 +63,7 @@ input[type=text] {
     top: 50px;
     bottom: 0;
     width: 100%;
+    min-width: 940px;
 }
 
 .x-main-wrapper-inner {
@@ -136,14 +141,15 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 #left-pane-tab-content {
     position: absolute;
-    top: 45px;
+    top: 50px;
     bottom: 0;
-    width: 100%;
+    width: 100%;            
 }
 
 #left-pane-tab-content .x-tab-content{
     height: 100%;
     width: 100%;
+    background-color: #fff;
 }
 
 #main-right-pane {
@@ -190,6 +196,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 .x-artist-profile-nav .x-artist-profile-pic-holder img#profile-picture{
     height: 100%;
+    cursor: pointer;
 }
 
 #profile-tab-content {
@@ -216,4 +223,51 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 .x-play-widget-holder iframe {
     width: 100%;
     height: 80px;
+}
+
+.x-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000; 
+    display: none;
+}
+
+.x-modal.x-active {
+    display: table;
+}
+
+.x-modal-x {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #aaa;    
+    text-align: center;
+}
+
+.x-modal .x-modal-x:hover {
+    color: #ddd;
+}
+
+
+.x-modal .x-modal-inner {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.x-modal .x-modal-image-holder {
+    width: 600px;
+    max-height: 90%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.x-modal .x-modal-image-holder img {
+    width: 100%;
 }
