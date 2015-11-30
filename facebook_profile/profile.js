@@ -23,7 +23,7 @@ function getTopTracks(artist_id) {
 }
 
 function getArtistNews(artist_id) {
-	var link = 'http://developer.echonest.com/api/v4/artist/news?';
+	var link = 'http://developer.echonest.com/api/v4/artist/news';
 	$.ajax({
         url: link,
         data: { 
@@ -46,7 +46,7 @@ function getArtistNews(artist_id) {
 }
 
 function getArtistInfo(artist_id) {
-	var link = 'http://developer.echonest.com/api/v4/artist/profile?';
+	var link = 'http://developer.echonest.com/api/v4/artist/profile';
 	$.ajax({
         url: link,
         data: { 
@@ -59,28 +59,33 @@ function getArtistInfo(artist_id) {
         type: "GET",
         success: function(response) {
             console.log(response);
-            if(response) {
-            	
+            if(response && response.response && response.response.artist.artist_location) {
+            	var location = response.response.artist.artist_location;
+            	console.log(location.city);
             }
         }
     });
 }
 
 function getArtistImage(artist_id) {
-	var link = 'http://developer.echonest.com/api/v4/artist/images?';
+	var link = 'http://developer.echonest.com/api/v4/artist/images';
 	$.ajax({
         url: link,
+        dataType: 'jsonp',
         data: { 
             "api_key": api_key,
-            "id": artist_id,
-            "format": 'json'
+            "id": 'spotify:artist:' + artist_id,
+            "format": 'jsonp'
         },
         cache: true,
         type: "GET",
         success: function(response) {
             console.log(response);
-            if(response) {
-            	
+            if(response && response.response && response.response.images) {
+            	var images = response.response.images;
+            	for(var i=0; i<images.length; i++) {
+            		console.log(images[i].url);
+            	}
             }
         }
     });
