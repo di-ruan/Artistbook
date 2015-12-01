@@ -250,4 +250,5 @@ function initMetadata() {
     getGenreList(genre_list);
     getStyleList(style_list);
     getMoodList(mood_list);
+    showSearchHistory();
 }

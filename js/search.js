@@ -115,6 +115,15 @@ function getMoodList(rst) {
 var showArtistSearchResults = function(artists) {
   console.log("TODO: should show artists in search results");
   console.log(artists);
+  artists.forEach(function (a) {
+    var img;
+    if (a.images.length > 0) {
+      img = a.images[0].url;
+    } else {
+      img = "no img";
+    }
+    $('#search-results-tab-content').append("<li>" + a.name + "(" + img +  ")</li>");
+  });
 };
 
 // TODO: should show search history
@@ -122,6 +131,10 @@ var showSearchHistory = function() {
   var history = getSearchHistory();
   console.log("TODO: should show search history");
   console.log(history);
+  $("#history-tab-content").empty();
+  history.forEach(function(h) {
+    $("#history-tab-content").append('<li>' + JSON.stringify(h) + '</li>');
+  });
 };
 
 /**
