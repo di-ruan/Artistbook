@@ -15,14 +15,30 @@ var sa = {
     }
 };
 
+var artist_id = "43ZHCT0cAZBISjO8DG9PnE";
+var api_key = "XUYQDKM596JS3A6GC";
+
 /**
  * Initializes the events
  */
 $(document).ready(function(){
-   initTabs();
-   initPicModal();
-   initProfilePic();
+    initTabs();
+    initPicModal();
+    initProfilePic();
+    loadProfile();
 });
+
+function loadProfile() {
+    getTopTracks(artist_id);
+    getArtistNews(artist_id);
+    getArtistInfo(artist_id);
+    getArtistImage(artist_id);
+}
+
+function changeArtistId(id) {
+    artist_id = id;
+    loadProfile();
+}
 
 /**
  * Initializes the tabs
