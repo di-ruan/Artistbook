@@ -18,6 +18,11 @@ var sa = {
 var artist_id = "43ZHCT0cAZBISjO8DG9PnE";
 var api_key = "XUYQDKM596JS3A6GC";
 
+//TODO: autocomplete for searching by genre, style or mood
+// when searching for genre, style or mood, we need have a autocomplete from the list and
+// let the user to select what they want.
+var genre_list = [], style_list = [], mood_list = [];
+
 /**
  * Initializes the events
  */
@@ -27,6 +32,7 @@ $(document).ready(function(){
     initProfilePic();
     initSearchBar();
     loadProfile();
+    initMetadata();
 });
 
 function loadProfile() {
@@ -225,8 +231,23 @@ function initSearchBar() {
 }
 
 /**
- * @TODO Make AJAX request to search
+ * Do search
+ * @param searchTerm for now is a string of mood. It is better to make it as json object.
  */
 function doSearch(searchTerm) {
-    console.log(searchTerm);
+    var searchTermObject = {
+        "mood" : searchTerm
+    };
+    addSearchToHistory(searchTermObject);
+    searchArtistByCriteria(searchTermObject, showArtistSearchResults);
+}
+
+/**
+ * Get available genres, styles and mood for artist search.
+ * Set vars in genre_list, style_list and mood_list.
+ */
+function initMetadata() {
+    getGenreList(genre_list);
+    getStyleList(style_list);
+    getMoodList(mood_list);
 }
