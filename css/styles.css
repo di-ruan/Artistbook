@@ -1,0 +1,283 @@
+
+html, body {
+    background-color: #e9eaed;
+}
+
+body {
+    min-width: 940px;
+}
+
+input[type=text] {
+    padding: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+
+#main-nav-bar {
+    width: 100%;
+    height: 50px;
+    background-color: #222;
+    overflow: hidden;
+}
+
+#main-nav-bar .x-logo-container {
+    float: left;
+    height: 100%;    
+}
+
+#main-nav-bar .x-logo-container .x-logo {
+    height: 45px;
+    margin-top: 2px;
+}
+
+.x-help-button-container {
+    float: right;
+}
+
+.x-search-container {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#main-search {
+    margin-top: 4px;
+    width: 100%;
+}
+
+#help-button {
+    display: inline-block;
+    margin-top: 8px;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    background-image: url(icons/icon-help.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.x-main-wrapper {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+    min-width: 940px;
+}
+
+.x-main-wrapper-inner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+/* Tabs start */
+ul.x-tabs {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;    
+    background-color: #fff;
+    border-left: 1px solid #aaa;
+    height: 38px;
+}
+
+ul.x-tabs li.x-tab {
+    float: left;
+    display: block;
+    list-style: none;
+    cursor: pointer;
+    padding: 10px;
+    border-right: 1px solid #aaa;
+    margin: 0;
+    color: #3b5998;
+    position: relative;  
+    font-weight: bold;
+}
+
+.x-tab-content {
+    display: none;
+}
+
+.x-tab-content.x-active{
+    display: block;    
+}
+
+ul.x-tabs li.x-tab.x-active {
+    color: #373e4d;
+    cursor: default;
+}
+
+ul.x-tabs .x-active-marker {
+    display: none;
+}
+
+ul.x-tabs li.x-tab.x-active .x-active-marker {    
+    background-image: url(icons/fb-icons.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: -52px -401px;
+    bottom: -1px;
+    display: block;
+    height: 9px;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 17px;
+}
+/* Tabs end */
+
+
+#main-left-pane {
+    float: left;
+    width: 350px;
+    overflow: hidden;
+    border-right: 1px solid #aaa;
+    height: 100%;
+    position: relative;
+}
+
+#left-pane-tab-content {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;            
+}
+
+#left-pane-tab-content .x-tab-content{
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+#main-right-pane {
+    overflow: hidden;
+    height: 100%;    
+}
+
+.x-artist-profile-holder {
+    position: relative;    
+    overflow: hidden;
+    height: 100%;
+}
+.x-artist-profile-nav {
+    overflow: hidden;      
+    height: 160px;
+    background-color: #fff;
+    margin: 20px 20px 0 20px;
+}
+
+.x-profile-menu-holder {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #aaa;
+}
+
+.x-artist-profile-nav .x-right-profile {      
+    overflow: hidden;
+    position: relative;  
+    height: 100%;
+}
+
+.x-follow-widget-holder {
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+.x-artist-profile-nav .x-artist-profile-pic-holder {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.x-artist-profile-nav .x-artist-profile-pic-holder img#profile-picture{
+    height: 100%;
+    cursor: pointer;
+}
+
+#profile-tab-content {
+    position: absolute;
+    top: 190px;
+    bottom: 100px;
+    left: 20px;
+    right: 20px;       
+    background-color: #fff; 
+}
+
+#profile-tab-content .x-tab-content {
+    height: 100%;
+    overflow: auto;    
+}
+
+.x-play-widget-holder {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    right: 20px;
+}
+
+.x-play-widget-holder iframe {
+    width: 100%;
+    height: 80px;
+}
+
+.x-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000; 
+    display: none;
+}
+
+.x-modal.x-active {
+    display: table;
+}
+
+.x-modal-x {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #aaa;    
+    text-align: center;
+}
+
+.x-modal .x-modal-x:hover {
+    color: #ddd;
+}
+
+
+.x-modal .x-modal-inner {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.x-modal .x-modal-image-holder {
+    width: 600px;
+    max-height: 90%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.x-modal .x-modal-image-holder img {
+    width: 100%;
+}
+
+#profile-photos-tab-content-ul img {
+    width: 100px;
+    height: 100px;
+}
+
+#profile-tab-content li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}

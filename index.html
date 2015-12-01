@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spotartist</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <div id="main-nav-bar">
+            <div class="x-logo-container">
+                <img class="x-logo" src="img/logo.png" alt="Spotartist logo"/>
+            </div>
+            <div class="x-help-button-container" >
+                <a id="help-button" title="Click this button for help"></a>
+            </div>
+            <div class="x-search-container">
+                <input type="text" id="main-search" placeholder="Enter your search term here..."/>
+            </div>
+        </div>
+        <div class="x-main-wrapper">
+            <div class="x-main-wrapper-inner">
+                <div id="main-left-pane">
+                    <ul class="x-tabs" data-content-holder="left-pane-tab-content">
+                        <li class="x-tab x-active" id="following-tab" data-content="following-tab-content">
+                            Following
+                            <span class="x-active-marker"></span>
+                        </li>
+                        <li class="x-tab" id="history-tab" data-content="history-tab-content">
+                            History
+                            <span class="x-active-marker"></span>
+                        </li>
+                        <li class="x-tab" id="search-results-tab" data-content="search-results-tab-content">
+                            Search results
+                            <span class="x-active-marker"></span>
+                        </li>
+                    </ul>
+                    
+                    <div id="left-pane-tab-content">
+                        <div id="following-tab-content" class="x-tab-content x-active">
+                            Following tab!                            
+                        </div>
+                        <div id="history-tab-content" class="x-tab-content">
+                            History tab!
+                        </div>
+                        <div id="search-results-tab-content" class="x-tab-content">
+                            Search tab!
+                        </div>
+                    </div>
+                </div>
+                <div id="main-right-pane">
+                    <div class="x-artist-profile-holder">
+                        <div class="x-artist-profile-nav">
+                            <div class="x-artist-profile-pic-holder">
+                                <img id="profile-picture" src="https://i.scdn.co/image/c6b5162483492c373d0bce32034091ea2dd93549" alt="Artist name" />
+                            </div>
+                            <div class="x-right-profile">
+                                <div class="x-follow-widget-holder">
+                                    <iframe id="follow-widget" 
+                                            src="https://embed.spotify.com/follow/1/?uri=spotify:artist:1vCWHaC5f2uS3yhpwWbIA6&size=basic&theme=light" 
+                                            width="200" height="25" scrolling="no" frameborder="0" 
+                                    style="border:none; overflow:hidden;" allowtransparency="true">                                               
+                                    </iframe>
+                                </div>
+                                <div class="x-profile-menu-holder">
+                                    <ul class="x-tabs" data-content-holder="profile-tab-content">
+                                        <li class="x-tab x-active" id="profile-timeline" data-content="profile-timeline-tab-content">
+                                            Timeline
+                                            <span class="x-active-marker"></span>
+                                        </li>
+                                        <li class="x-tab" id="profile-about-tab" data-content="profile-about-tab-content">
+                                            About
+                                            <span class="x-active-marker"></span>
+                                        </li>
+                                        <li class="x-tab" id="profile-photos-tab" data-content="profile-photos-tab-content">
+                                            Photos
+                                            <span class="x-active-marker"></span>
+                                        </li>
+                                        <li class="x-tab" id="profile-songs-tab" data-content="profile-songs-tab-content">
+                                            Songs
+                                            <span class="x-active-marker"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div id="profile-tab-content">
+                            <div class="x-tab-content x-active" id="profile-timeline-tab-content">
+                                <ul id="profile-timeline-tab-content-ul"></ul>
+                            </div>
+                            <div class="x-tab-content" id="profile-about-tab-content">
+                                <ul id="profile-about-tab-content-ul"></ul>
+                            </div>
+                            <div class="x-tab-content" id="profile-photos-tab-content">
+                                <ul id="profile-photos-tab-content-ul"></ul>
+                            </div>
+                            <div class="x-tab-content" id="profile-songs-tab-content">
+                                <ul id="profile-songs-tab-content-ul"></ul>
+                            </div>
+                        </div>
+                        <div class="x-play-widget-holder">
+                            <iframe id="play-widget" src="https://embed.spotify.com/?uri=spotify:track:4th1RQAelzqgY7wL53UGQt" 
+                            frameborder="0" 
+                            allowtransparency="true">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="x-modal" id="image-modal">
+            <div class="x-modal-x">X</div>
+            <div class="x-modal-inner">
+                <div class="x-modal-image-holder">
+                    <img src=""/>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/profile.js"></script>
+        <script src="js/search.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
