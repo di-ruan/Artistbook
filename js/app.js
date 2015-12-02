@@ -42,6 +42,7 @@ function loadProfile() {
     getArtistNews(artist_id);
     getArtistInfo(artist_id);
     getArtistImage(artist_id);
+    getSimilarArtists(artist_id);
 }
 
 function changeArtistId(id) {

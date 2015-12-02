@@ -106,3 +106,30 @@ function showTopTracks(tracks) {
     }   
 }
 
+function getSimilarArtists(artist_id) {
+    var link = 'http://developer.echonest.com/api/v4/artist/similar';
+    $.ajax({
+        url: link,
+        data: { 
+            "api_key": api_key,
+            "id": 'spotify:artist:' + artist_id,
+            "format": 'json'
+        },
+        cache: true,
+        type: "GET",
+        success: function(response) {           
+            if(response && response.response && response.response.artists) {
+                showSimilarArtists(response.response.artists);
+            }
+        }
+    });
+}
+
+function showSimilarArtists(artist) {
+    for(var i in artist) {
+        $("#profile-artists-tab-content-ul").append(
+            '<li>' + artist[i].name + '</li>'
+        );
+    }   
+}
+
