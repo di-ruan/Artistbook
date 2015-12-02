@@ -191,3 +191,29 @@ function isEquivalent(a, b) {
   }
   return true;
 }
+
+// -- user --
+function getFollowingList(next) {
+  console.log('GET https://api.spotify.com/v1/me/following?type=artist');
+  $.ajax({
+    url: 'https://api.spotify.com/v1/me/following?type=artist',
+    method: 'GET',
+    headers: {
+      "Authorization" : "Bearer " + access_token
+    },
+    success: function(response) {
+      if (response && response.artists && response.artists.items) {
+        next(response.artists.items);
+      } else {
+        console.log("invalid response");
+      }
+    }
+  });
+}
+
+var showFollowingList = function(artists) {
+  $('#following-tab-content').empty();
+  artists.forEach(function(a) {
+    $('#following-tab-content').append('<li>' + a.name + '</li>');
+  });
+};

@@ -17,6 +17,8 @@ var sa = {
 
 var artist_id = "43ZHCT0cAZBISjO8DG9PnE";
 var api_key = "XUYQDKM596JS3A6GC";
+// this token should be replaced every time running.
+var access_token = 'BQCVwdHEh7-p6jZ4mvKyZBG6PUtzErnAG7RwsT5oV2sAtFNlETEtc2GZESOth7hZbRY8N3n2Dk34H69b_YzAJqVyN6y3DspWc80Y2IowrVwyuaBAHjTTY6AwPR9aqi9Zrv46sGyH_TV7hNBbPIT9_U4AosiTDLLekiLChDrE7hdCKyHY1ZnKGtx5hnY';
 
 //TODO: autocomplete for searching by genre, style or mood
 // when searching for genre, style or mood, we need have a autocomplete from the list and
@@ -251,4 +253,5 @@ function initMetadata() {
     getStyleList(style_list);
     getMoodList(mood_list);
     showSearchHistory();
+    getFollowingList(showFollowingList);
 }
