@@ -1,3 +1,26 @@
+function getArtistPictureAndName(artist_id) {
+    var link = 'https://api.spotify.com/v1/artists/' + artist_id;
+    $.ajax({
+        url: link,
+        cache: true,
+        type: "GET",
+        success: function(response) {
+            if(response && response.images && response.images.length > 0) {
+                showArtistPicture(response.images[0].url);
+            }
+            showArtistName(response.name);
+        }
+    });
+}
+
+function showArtistPicture(url) {
+    $("#profile-picture").attr("src", url);
+}
+
+function showArtistName(name) {
+    $("#profile-name").text(name);
+}
+
 function getArtistNews(artist_id) {
 	var link = 'http://developer.echonest.com/api/v4/artist/news';
 	$.ajax({
@@ -130,8 +153,10 @@ function getSimilarArtists(artist_id) {
 function showSimilarArtists(artists) {
     var ids = "";
     for(var i in artists) {
-        var id = artists[i].foreign_ids[0].foreign_id;
-        ids += id.slice(15) + ','
+        if(artists[i].foreign_ids && artists[i].foreign_ids.length > 0) {
+            var id = artists[i].foreign_ids[0].foreign_id;
+            ids += id.slice(15) + ','
+        }   
     }
     ids = ids.slice(0, -1);
     var link = 'https://api.spotify.com/v1/artists';
@@ -145,9 +170,11 @@ function showSimilarArtists(artists) {
         success: function(response) {       
             if(response && response.artists) {
                 for(var i in response.artists) {
-                    var image = response.artists[i].images[0].url;
-                    $("#profile-artists-tab-content-ul").append(
-                        '<li><img src="' + image + '">' + artists[i].name + '</li>');
+                    if(response.artists[i].images && response.artists[i].images.length > 0) {
+                        var image = response.artists[i].images[0].url;
+                        $("#profile-artists-tab-content-ul").append(
+                            '<li><img src="' + image + '">' + response.artists[i].name + '</li>');
+                    }
                 }
             }
         }

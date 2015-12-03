@@ -15,7 +15,8 @@ var sa = {
     }
 };
 
-var artist_id = "43ZHCT0cAZBISjO8DG9PnE";
+var artist_id1 = "43ZHCT0cAZBISjO8DG9PnE";
+var artist_id2 = "2XBzvyw3fwtZu4iUz12x0G";
 var api_key = "XUYQDKM596JS3A6GC";
 // this token should be replaced every time running.
 var access_token = 'BQCVwdHEh7-p6jZ4mvKyZBG6PUtzErnAG7RwsT5oV2sAtFNlETEtc2GZESOth7hZbRY8N3n2Dk34H69b_YzAJqVyN6y3DspWc80Y2IowrVwyuaBAHjTTY6AwPR9aqi9Zrv46sGyH_TV7hNBbPIT9_U4AosiTDLLekiLChDrE7hdCKyHY1ZnKGtx5hnY';
@@ -33,21 +34,17 @@ $(document).ready(function(){
     initPicModal();
     initProfilePic();
     initSearchBar();
-    loadProfile();
+    loadProfile(artist_id1);
     initMetadata();
 });
 
-function loadProfile() {
-    getTopTracks(artist_id);
-    getArtistNews(artist_id);
-    getArtistInfo(artist_id);
-    getArtistImage(artist_id);
-    getSimilarArtists(artist_id);
-}
-
-function changeArtistId(id) {
-    artist_id = id;
-    loadProfile();
+function loadProfile(id) {
+    getArtistPictureAndName(id);
+    getTopTracks(id);
+    getArtistNews(id);
+    getArtistInfo(id);
+    getArtistImage(id);
+    getSimilarArtists(id);
 }
 
 /**
