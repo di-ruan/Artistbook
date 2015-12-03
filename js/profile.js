@@ -110,10 +110,12 @@ function getSimilarArtists(artist_id) {
     var link = 'http://developer.echonest.com/api/v4/artist/similar';
     $.ajax({
         url: link,
+        dataType: 'jsonp',
         data: { 
             "api_key": api_key,
             "id": 'spotify:artist:' + artist_id,
-            "format": 'json'
+            "format": 'jsonp',
+            "bucket": 'id:spotify'
         },
         cache: true,
         type: "GET",
@@ -125,11 +127,29 @@ function getSimilarArtists(artist_id) {
     });
 }
 
-function showSimilarArtists(artist) {
-    for(var i in artist) {
-        $("#profile-artists-tab-content-ul").append(
-            '<li>' + artist[i].name + '</li>'
-        );
-    }   
+function showSimilarArtists(artists) {
+    var ids = "";
+    for(var i in artists) {
+        var id = artists[i].foreign_ids[0].foreign_id;
+        ids += id.slice(15) + ','
+    }
+    ids = ids.slice(0, -1);
+    var link = 'https://api.spotify.com/v1/artists';
+    $.ajax({
+        url: link,
+        data: { 
+            "ids": ids
+        },
+        cache: true,
+        type: "GET",
+        success: function(response) {       
+            if(response && response.artists) {
+                for(var i in response.artists) {
+                    var image = response.artists[i].images[0].url;
+                    $("#profile-artists-tab-content-ul").append(
+                        '<li><img src="' + image + '">' + artists[i].name + '</li>');
+                }
+            }
+        }
+    });
 }
-

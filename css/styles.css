@@ -277,6 +277,11 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     height: 100px;
 }
 
+#profile-artists-tab-content-ul img {
+    width: 100px;
+    height: 100px;
+}
+
 #profile-tab-content li {
     list-style-type: none;
     margin-bottom: 10px;
