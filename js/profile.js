@@ -116,20 +116,43 @@ function getArtistInfo(artist_id) {
         cache: true,
         type: "GET",
         success: function(response) {
-            if(response && response.response && response.response.artist.artist_location) {
+            if(response && response.response && response.response.artist.artist_location) {                
                 showArtistInfo(response.response.artist.artist_location);
             }
         }
     });
 }
 
-function showArtistInfo(info) {
-    $("#profile-about-tab-content-ul").empty();
-    for(var att in info) {
-        $("#profile-about-tab-content-ul").append(
-            '<li>' + info[att] + '</li>'
-        );
-    }
+function showArtistInfo(info) {    
+    var aboutTabContent = $("#profile-about-tab-content");    
+    aboutTabContent.empty();
+    
+    var center = info.location,
+        src = [
+            'https://maps.googleapis.com/maps/api/staticmap?center=',
+                center,
+            '&zoom=7&size=300x300&maptype=roadmap&markers=color:blue%7C' + center        
+        ],
+        imgHtml = '<img src="' + src.join('') + '"/>',
+        aboutHtml = [];
+        
+    if (center) {
+        aboutHtml.push('<div class="x-map-holder">');
+        aboutHtml.push(imgHtml);
+        aboutHtml.push('</div>');
+    } 
+        
+    aboutHtml.push('<ul class="x-location-list">');
+        
+    $.each(info, function(key, value){
+        aboutHtml.push('<li>' + value + '</li>');
+    });
+    
+    aboutHtml.push('</ul>');
+    
+           
+    
+    aboutTabContent.append(aboutHtml.join(''));
 }
 
 function getArtistImage(artist_id) {

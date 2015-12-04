@@ -246,6 +246,24 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     color: #555;
 }
 
+#profile-about-tab-content {
+    
+}
+
+#profile-about-tab-content .x-location-list {
+    float: left;
+}
+
+#profile-about-tab-content .x-map-holder{
+    overflow: hidden;
+    float: left;
+    margin: 16px 0 0 16px;
+}
+
+#profile-about-tab-content .x-map-holder img {
+    width: 300px;
+}
+
 #profile-tab-content .x-tab-content {
     height: 100%;
     overflow: auto;    
