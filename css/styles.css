@@ -205,7 +205,45 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     bottom: 100px;
     left: 20px;
     right: 20px;       
-    background-color: #fff; 
+}
+
+#profile-about-tab-content,
+#profile-photos-tab-content,
+#profile-songs-tab-content,
+#profile-artists-tab-content {
+    background-color: #fff;
+}
+
+#profile-timeline-tab-content {
+    
+}
+
+#profile-timeline-tab-content .x-news-article {    
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+#profile-timeline-tab-content .x-news-article h4{
+    margin: 0;
+    padding: 0;
+}
+
+#profile-timeline-tab-content .x-news-article h4 a{
+    color: #3b5998;
+    text-decoration: none;
+}
+
+#profile-timeline-tab-content .x-news-article .x-article-date{
+    color: #9197a3;
+    font-size: 14px;
+}
+
+#profile-timeline-tab-content .x-news-article .x-article-summary{
+    margin-top: 10px;
+    color: #555;
 }
 
 #profile-tab-content .x-tab-content {

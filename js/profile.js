@@ -40,13 +40,67 @@ function getArtistNews(artist_id) {
     });
 }
 
-function showArtistNews(news) {
-    $("#profile-timeline-tab-content-ul").empty();
-    for(var i in news) {
-        $("#profile-timeline-tab-content-ul").append(
-            '<li>' + news[i].date_found + '<br>' + news[i].name + '</li>'
-        );
+function showArtistNews(news) {    
+    var newsTabContent = $('#profile-timeline-tab-content');
+    
+    newsTabContent.empty();
+    
+    news.forEach(function(article){
+        addNewsArticle(article, newsTabContent);
+    });
+}
+
+function addNewsArticle(article, destination) {      
+    var articleHtmlArray = [
+        '<div class="x-news-article">',
+            '<h4>',
+                '<a target="_blank" href="' + article.url + '">',
+                    article.name,
+                '</a>',
+            '</h4>',
+            '<div class="x-article-date">',
+                parseArticleDate(article.date_found),
+            '</div>',
+            '<div class="x-article-summary">',
+                parseArticleSummary(article.summary, 300),
+            '</div>',
+        '</div>'
+    ];
+    
+    var html = $(articleHtmlArray.join(''));
+    
+    destination.append(html);
+}
+
+function parseArticleSummary(summary, maxLength) {
+    var words = summary.split(' '),
+        cut = false,
+        retStr = '';
+    
+    words.forEach(function(word){
+        if (retStr.length + word.length + 1> maxLength) {
+            cut = true;
+            return false;
+        }
+        
+        retStr += word + ' ';
+    });
+    
+    if (cut) {
+        retStr += '...';
     }
+    
+    return retStr;
+}
+
+function parseArticleDate(date) {
+    var parts = date.split('T'),
+        dateParts = parts[0].split('-'),
+        year = dateParts[0],
+        month = dateParts[1],
+        day = dateParts[2];
+    
+    return month + '/' + day + '/' + year;        
 }
 
 function getArtistInfo(artist_id) {
