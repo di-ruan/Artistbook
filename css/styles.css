@@ -273,13 +273,13 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 }
 
 #profile-photos-tab-content-ul img {
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 #profile-artists-tab-content-ul img {
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 #profile-tab-content li {
