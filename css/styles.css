@@ -220,7 +220,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 #profile-timeline-tab-content .x-news-article {    
     padding: 10px;
-    margin: 10px;
+    margin: 10px 10px 10px 0;
     background-color: #fff;
     overflow: hidden;
     border-radius: 5px;
