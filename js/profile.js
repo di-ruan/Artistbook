@@ -41,9 +41,10 @@ function getArtistNews(artist_id) {
 }
 
 function showArtistNews(news) {
+    $("#profile-timeline-tab-content-ul").empty();
     for(var i in news) {
         $("#profile-timeline-tab-content-ul").append(
-            '<li>' + news[i].name + '</li>'
+            '<li>' + news[i].date_found + '<br>' + news[i].name + '</li>'
         );
     }
 }
@@ -69,6 +70,7 @@ function getArtistInfo(artist_id) {
 }
 
 function showArtistInfo(info) {
+    $("#profile-about-tab-content-ul").empty();
     for(var att in info) {
         $("#profile-about-tab-content-ul").append(
             '<li>' + info[att] + '</li>'
@@ -97,10 +99,12 @@ function getArtistImage(artist_id) {
 }
 
 function showArtistImage(images) {
+    $("#profile-photos-tab-content-ul").empty();
     for(var i in images) {
-        $("#profile-photos-tab-content-ul").append(
-            '<li><img src="' + images[i].url + '"></img></li>'
-        );
+        //var img = $("img").attr("url", images[i].url).error(function() {
+        //    this.hide();
+        //});
+        $("#profile-photos-tab-content-ul").append('<li><img src="' + images[i].url + '"></img></li>');
     }   
 }
 
@@ -122,6 +126,7 @@ function getTopTracks(artist_id) {
 }
 
 function showTopTracks(tracks) {
+    $("#profile-songs-tab-content-ul").empty();
     for(var i in tracks) {
         $("#profile-songs-tab-content-ul").append(
             '<li>' + tracks[i].name + '</li>'
@@ -167,13 +172,14 @@ function showSimilarArtists(artists) {
         },
         cache: true,
         type: "GET",
-        success: function(response) {       
+        success: function(response) {    
             if(response && response.artists) {
+                $("#profile-artists-tab-content-ul").empty();
                 for(var i in response.artists) {
                     if(response.artists[i].images && response.artists[i].images.length > 0) {
                         var image = response.artists[i].images[0].url;
                         $("#profile-artists-tab-content-ul").append(
-                            '<li><img src="' + image + '">' + response.artists[i].name + '</li>');
+                            '<li><img src="' + image + '"><a href="javascript:loadProfile(\''+ response.artists[i].id + '\')">' + response.artists[i].name + '</a></li>');
                     }
                 }
             }
