@@ -176,13 +176,28 @@ function getArtistImage(artist_id) {
 }
 
 function showArtistImage(images) {
-    $("#profile-photos-tab-content-ul").empty();
-    for(var i in images) {
-        //var img = $("img").attr("url", images[i].url).error(function() {
-        //    this.hide();
-        //});
-        $("#profile-photos-tab-content-ul").append('<li><img src="' + images[i].url + '"></img></li>');
-    }   
+    var photosTabContent = $("#profile-photos-tab-content");
+    
+    photosTabContent.empty();
+        
+    images.forEach(function(image){
+        var imgHtml = [
+            '<div class="x-photo-holder">',
+                '<div class="x-photo-holder-inner">',
+                    '<img src="' + image.url + '" />',
+                '</div>',
+            '</div>'
+        ],
+        imgHolder = $(imgHtml.join('')),
+        img = imgHolder.find('img');
+            
+        img.load(function(){
+           imgHolder.addClass('x-display');
+           addModalPicEvent(imgHolder);
+        });
+        
+        photosTabContent.append(imgHolder);
+    });    
 }
 
 function getTopTracks(artist_id) {

@@ -273,6 +273,39 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     overflow: auto;    
 }
 
+#profile-photos-tab-content {
+    
+}
+
+#profile-photos-tab-content .x-photo-holder{
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    border: 1px solid #ccc;
+    display: none;
+    overflow: hidden;
+    margin: 10px;
+    float: left;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#profile-photos-tab-content .x-photo-holder.x-display {
+    display: table;
+}
+
+#profile-photos-tab-content .x-photo-holder .x-photo-holder-inner{
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+#profile-photos-tab-content .x-photo-holder img{
+    max-width: 270px;
+    max-height: 270px;
+}
+
 .x-play-widget-holder {
     position: absolute;
     bottom: 5px;
@@ -326,23 +359,10 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     max-height: 90%;
     overflow: hidden;
     margin: 0 auto;
+    text-align: center;
 }
 
 .x-modal .x-modal-image-holder img {
-    width: 100%;
-}
-
-#profile-photos-tab-content-ul img {
-    max-width: 100px;
-    max-height: 100px;
-}
-
-#profile-artists-tab-content-ul img {
-    max-width: 100px;
-    max-height: 100px;
-}
-
-#profile-tab-content li {
-    list-style-type: none;
-    margin-bottom: 10px;
+    max-width: 600px;
+    max-height: 500px;
 }

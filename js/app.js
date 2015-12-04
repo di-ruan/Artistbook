@@ -149,7 +149,7 @@ function hidePicModal() {
  */
 function showPicModal(picSrc) {
     var imageModal = $('#image-modal'),
-            img = imageModal.find('img');
+        img = imageModal.find('img');
     
     imageModal.addClass('x-active');
     img.attr('src', picSrc);
@@ -167,7 +167,13 @@ function initProfilePic(){
  * Adds click event to display modal pic
  */
 function addModalPicEvent(pic) {
-    pic.click(function(e){
+    var container = pic;
+    
+    if (!pic.is('img')) {
+        pic = pic.find('img');        
+    }
+    
+    container.click(function(e){
        e.preventDefault();
        
        var picSrc = pic.attr('src');
