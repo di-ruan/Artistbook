@@ -182,6 +182,10 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     height: 100%;
 }
 
+#profile-name {
+    margin-left: 5px;
+}
+
 .x-follow-widget-holder {
     margin-left: 5px;
     margin-top: 30px;
