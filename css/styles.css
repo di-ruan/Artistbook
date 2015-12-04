@@ -196,6 +196,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     width: 200px;
     overflow: hidden;
     height: 100%;
+    text-align: center;
 }
 
 .x-artist-profile-nav .x-artist-profile-pic-holder img#profile-picture{
@@ -250,12 +251,13 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     color: #555;
 }
 
-#profile-about-tab-content {
-    
+#profile-about-tab-content h3{
+    margin-left: 16px;
 }
 
 #profile-about-tab-content .x-location-list {
     float: left;
+    list-style: none;
 }
 
 #profile-about-tab-content .x-map-holder{
@@ -356,6 +358,49 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     margin-bottom: 5px;
     padding: 0;
     color: #3b5998;
+}
+
+#profile-songs-tab-content .x-track-info .x-track-album {
+    color: #555;
+}
+
+#profile-artists-tab-content {
+    
+}
+
+#profile-artists-tab-content .x-similar-artist-holder {
+    width: 300px;
+    height: 64px;
+    overflow: hidden;
+    margin: 10px;
+    float: left;
+    border: 1px solid #ccc;
+}
+
+#profile-artists-tab-content .x-similar-artist-holder .x-similar-artist-photo-holder {
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    float: left;    
+}
+
+#profile-artists-tab-content .x-similar-artist-holder .x-similar-artist-info {
+    overflow: hidden;    
+} 
+
+#profile-artists-tab-content .x-similar-artist-holder .x-similar-artist-info h4 {
+    padding: 0;
+    margin: 5px;
+    color: #3b5998;    
+    cursor: pointer;
+}
+
+#profile-artists-tab-content .x-similar-artist-holder .x-similar-artist-info .x-similar-artist-num-followers {
+    color: #555;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 .x-play-widget-holder {

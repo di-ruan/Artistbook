@@ -134,7 +134,9 @@ function showArtistInfo(info) {
             '&zoom=7&size=300x300&maptype=roadmap&markers=color:blue%7C' + center        
         ],
         imgHtml = '<img src="' + src.join('') + '"/>',
-        aboutHtml = [];
+        aboutHtml = [
+            '<h3>Location</h3>'
+        ];
         
     if (center) {
         aboutHtml.push('<div class="x-map-holder">');
@@ -145,7 +147,7 @@ function showArtistInfo(info) {
     aboutHtml.push('<ul class="x-location-list">');
         
     $.each(info, function(key, value){
-        aboutHtml.push('<li>' + value + '</li>');
+        aboutHtml.push('<li><strong>' + ucFirst(key) + ':</strong> ' + value + '</li>');
     });
     
     aboutHtml.push('</ul>');
@@ -289,33 +291,92 @@ function getSimilarArtists(artist_id) {
 }
 
 function showSimilarArtists(artists) {
-    var ids = "";
-    for(var i in artists) {
-        if(artists[i].foreign_ids && artists[i].foreign_ids.length > 0) {
-            var id = artists[i].foreign_ids[0].foreign_id;
-            ids += id.slice(15) + ','
-        }   
-    }
-    ids = ids.slice(0, -1);
+    var ids = [];
+    
+    artists.forEach(function(artist){        
+        if(artist.foreign_ids && artist.foreign_ids.length) {
+            var parts = artist.foreign_ids[0].foreign_id.split(':');
+            
+            if (parts.length == 3){            
+                ids.push(parts[2]);
+            }
+        }
+    });
+    
     var link = 'https://api.spotify.com/v1/artists';
     $.ajax({
         url: link,
         data: { 
-            "ids": ids
+            "ids": ids.join(',')
         },
         cache: true,
         type: "GET",
         success: function(response) {    
             if(response && response.artists) {
-                $("#profile-artists-tab-content-ul").empty();
-                for(var i in response.artists) {
-                    if(response.artists[i].images && response.artists[i].images.length > 0) {
-                        var image = response.artists[i].images[0].url;
-                        $("#profile-artists-tab-content-ul").append(
-                            '<li><img src="' + image + '"><a href="javascript:loadProfile(\''+ response.artists[i].id + '\')">' + response.artists[i].name + '</a></li>');
-                    }
-                }
+                addSimilarArtists(response.artists);
             }
         }
     });
+}
+
+function addSimilarArtists(artists) {
+    var similarArtistsContent = $("#profile-artists-tab-content");
+    
+    similarArtistsContent.empty();
+    
+    artists.forEach(function(artist){        
+        var imgUrl = '',
+            followers = '';
+        
+        if (artist.images && artist.images.length) {
+            imgUrl = artist.images[artist.images.length - 1].url;
+        }
+        
+        if (artist.followers && artist.followers.total){
+            followers = '<strong>Followers: </strong> ' + artist.followers.total;
+        }
+
+        var artisHtmlArray = [
+            '<div class="x-similar-artist-holder">',
+                 '<div class="x-similar-artist-photo-holder" style="background-image: url(',
+                     imgUrl,
+                     '">',
+                 '</div>',
+                 '<div class="x-similar-artist-info">',
+                    '<div class="x-similar-artist-name">',
+                        '<h4>',
+                            artist.name,
+                        '</h4>',
+                    '</div>',
+                    '<div class="x-similar-artist-num-followers">',
+                        formatNumber(followers),
+                    '</div>',
+                 '</div>',
+            '</div>'
+        ];
+        
+        var artistHtml = $(artisHtmlArray.join('')),
+            h4 = artistHtml.find('h4');
+        
+        h4.click(function(e){
+            e.preventDefault();            
+            loadProfile(artist.id);
+        });
+        
+        similarArtistsContent.append(artistHtml);
+    });        
+}
+
+/*
+ *  TODO Add commas to number
+ *  e.g. 
+ *  input: 12345
+ *  output: "12,345" 
+ */
+function formatNumber(number) {
+    return "" + number;
+}
+
+function ucFirst(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
