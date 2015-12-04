@@ -218,12 +218,53 @@ function getTopTracks(artist_id) {
 }
 
 function showTopTracks(tracks) {
-    $("#profile-songs-tab-content-ul").empty();
-    for(var i in tracks) {
-        $("#profile-songs-tab-content-ul").append(
-            '<li>' + tracks[i].name + '</li>'
-        );
-    }   
+    var songsTabContent = $("#profile-songs-tab-content");   
+    songsTabContent.empty();
+    
+    tracks.forEach(function(track){
+        var imgUrl = '',
+            albumText = '';
+            
+        if (track.album) {
+            albumText = '<strong>Album:</strong> ' + track.album.name;
+            
+            if (track.album.images && track.album.images.length) {
+                imgUrl = track.album.images[track.album.images.length - 1].url;
+            }
+        }
+        
+        var trackHtmlArray = [
+            '<div class="x-track-holder">',
+                '<div class="x-track-img-holder" style="background-image: url(',
+                    imgUrl,
+                    ')">',
+                    '<a class="x-play-button"></a>',
+                '</div>',
+                '<div class="x-track-info">',
+                    '<div class="x-track-name">',
+                        '<h4>' + track.name + '</h4>',
+                    '</div>',
+                    '<div class="x-track-album">',
+                        albumText,
+                    '</div>',
+                '</div>',
+            '</div>'
+        ];
+        
+        var trackHtml = $(trackHtmlArray.join('')); 
+        
+        trackHtml.click(function(e){
+            e.preventDefault();            
+            playSong(track);
+        });
+        
+        songsTabContent.append(trackHtml);   
+    });                
+}
+
+// TODO
+function playSong(track) {
+    console.log('play song called', track);
 }
 
 function getSimilarArtists(artist_id) {

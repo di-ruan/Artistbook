@@ -306,6 +306,58 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     max-height: 270px;
 }
 
+#profile-songs-tab-content {
+    
+}
+
+#profile-songs-tab-content .x-track-holder {
+    margin: 10px;
+    float: left;
+    width: 350px;
+    height: 64px;
+    overflow: hidden;
+    border: 1px solid #ccc;    
+    cursor: pointer;
+}
+
+#profile-songs-tab-content .x-track-img-holder{
+    background-size: cover;
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+    float: left;
+    position: relative;
+}
+
+#profile-songs-tab-content .x-track-img-holder .x-play-button{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);    
+    display: none;
+    background-image: url(icons/play-icon.png);
+    background-size: cover;
+}
+
+
+#profile-songs-tab-content .x-track-holder:hover .x-track-img-holder .x-play-button {
+    display: block;
+}
+
+#profile-songs-tab-content .x-track-info {
+    overflow: hidden;
+    padding: 5px;
+}
+
+#profile-songs-tab-content .x-track-info .x-track-name h4{
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    color: #3b5998;
+}
+
 .x-play-widget-holder {
     position: absolute;
     bottom: 5px;
