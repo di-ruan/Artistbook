@@ -45,6 +45,7 @@ function loadProfile(id) {
     getArtistInfo(id);
     getArtistImage(id);
     getSimilarArtists(id);
+    setFollowWidgetUrl(id);
 }
 
 /**
@@ -195,8 +196,10 @@ function setProfilePicUrl(url){
 /**
  * Sets the url to the iframe containing the follow widget
  */
-function setFollowWidgetUrl(url) {
+function setFollowWidgetUrl(artist_id) {
+    var url = "https://embed.spotify.com/follow/1/?uri=spotify:artist:" + artist_id + "&size=basic&theme=light";
     $('iframe#follow-widget').attr('src', url);
+    
 }
 
 /**
