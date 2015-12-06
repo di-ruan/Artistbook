@@ -149,7 +149,10 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 #left-pane-tab-content .x-tab-content{
     height: 100%;
     width: 100%;
-    background-color: #fff;
+    background-color: #e9eaed;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
 }
 
 #main-right-pane {
@@ -462,4 +465,26 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 .x-modal .x-modal-image-holder img {
     max-width: 600px;
     max-height: 500px;
+}
+
+.s-artist-icon-64 {
+    height: 64px;
+    width: 64px;
+    border-radius: 50px;
+}
+.s-heat-icon {
+    height: 18px;
+    width: 18px;
+    padding-right: 5px;
+}
+
+.s-artist-holder {
+    padding-top: 15px;
+    padding-left: 8px;
+}
+
+.s-artist-row {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
 }

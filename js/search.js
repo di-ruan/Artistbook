@@ -1,5 +1,10 @@
 'use strict';
 
+$(document).on('click', '#s-result-icon', function () {
+  var id = $(this).attr('data-spotifyid');
+  loadProfile(id);
+});
+
 /**
  * search artist from API
  * @param searchTerms
@@ -12,7 +17,9 @@ function searchArtistByCriteria(searchTerms, next) {
   var uri = 'http://developer.echonest.com/api/v4/artist/search';
   var q = {
     "api_key" : api_key,
-    "bucket" : "images"
+    "bucket" : ["images", "hotttnesss", "genre", "id:spotify"],
+    "sort" : "hotttnesss-desc",
+    "artist_location" : "country:united states"
   };
   ["genre", "style", "mood", "artist_start_year_before"].forEach(function(e) {
     if (e in searchTerms) {
@@ -28,7 +35,14 @@ function searchArtistByCriteria(searchTerms, next) {
     success: function(response) {
       if(response && response.response && response.response.artists) {
         if (next) {
-          next(response.response.artists);
+          response.response.artists.forEach(function(e) {
+            var spotifyId = e.foreign_ids[0].foreign_id.substring('spotify:artist:'.length);
+            e.id = spotifyId;
+            getArtistPicture(spotifyId, function (err, imgUrl) {
+              e.images[0].url = imgUrl;
+              next(e);
+            });
+          });
         }
       } else {
         console.log("invalid response");
@@ -111,19 +125,31 @@ function getMoodList(rst) {
   });
 }
 
+var cleanSearchResult = function () {
+  $('#search-results-tab-content').empty();
+};
+
 // TODO: should show artists in search results
-var showArtistSearchResults = function(artists) {
-  console.log("TODO: should show artists in search results");
-  console.log(artists);
-  artists.forEach(function (a) {
-    var img;
-    if (a.images.length > 0) {
-      img = a.images[0].url;
-    } else {
-      img = "no img";
-    }
-    $('#search-results-tab-content').append("<li>" + a.name + "(" + img +  ")</li>");
-  });
+var showArtistSearchResult = function(a) {
+  var img;
+  if (a.images.length > 0) {
+    img = a.images[0].url;
+  } else {
+    img = "no img";
+  }
+  var htmlString = '<div class="media s-artist-row">' +
+    '<div class="media-left">' +
+    '<a href="#">' +
+    '<img class="media-object s-artist-icon-64" id="s-result-icon" data-spotifyid="' + a.id +
+    '"src="' + img + '" alt="Artist">' +
+    '</a>' +
+    '</div>' +
+    '<div class="media-body s-artist-holder">' +
+    '<h5 class="media-heading">' + a.name + '</h5>' +
+    '<p><img class="s-heat-icon" src="img/heat.png">' + a.hotttnesss.toFixed(2) + '</p>' +
+    '</div>' +
+    '</div>';
+  $('#search-results-tab-content').append(htmlString);
 };
 
 // TODO: should show search history
@@ -217,3 +243,19 @@ var showFollowingList = function(artists) {
     $('#following-tab-content').append('<li>' + a.name + '</li>');
   });
 };
+
+function getArtistPicture(artist_id, next) {
+  var link = 'https://api.spotify.com/v1/artists/' + artist_id;
+  $.ajax({
+    url: link,
+    cache: true,
+    type: "GET",
+    success: function(response) {
+      if(response && response.images && response.images.length > 0) {
+        next(null, response.images[0].url);
+      } else {
+        next({"msg" : "no img avai for this artist id: " + artist_id});
+      }
+    }
+  });
+}

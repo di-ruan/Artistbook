@@ -245,7 +245,8 @@ function doSearch(searchTerm) {
         "mood" : searchTerm
     };
     addSearchToHistory(searchTermObject);
-    searchArtistByCriteria(searchTermObject, showArtistSearchResults);
+    cleanSearchResult();
+    searchArtistByCriteria(searchTermObject, showArtistSearchResult);
 }
 
 /**
