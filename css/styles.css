@@ -9,9 +9,7 @@ body {
 
 input[type=text] {
     padding: 10px;
-    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #ccc;
     width: 200px;
 }
 
@@ -46,6 +44,10 @@ input[type=text] {
     margin-top: 4px;
     margin-bottom: 4px;
     width: 100%;
+}
+
+.input-group-btn {
+    border-radius: 12px;
 }
 
 #help-button {

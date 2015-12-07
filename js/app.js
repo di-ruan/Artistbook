@@ -241,17 +241,17 @@ function initSearchBar() {
        }, 1000);
     });
 
-    $(".dropdown-menu li a").click(function(){
+    $(".dropdown-menu li").click(function(){
         var search_hint = {
-            Name: 'Enter full or partial name of the artist...',
-            Genre: 'Enter genre of artists you are interested in...',
-            Style: 'Enter style of artists you are interested in...',
-            Mood: 'How do you feel like now?'
+            NAME: 'Enter full or partial name of the artist...',
+            GENRE: 'Enter genre of artists you are interested in...',
+            STYLE: 'Enter style of artists you are interested in...',
+            MOOD: 'How do you feel like now?'
         };
         var selText = $(this).text();
         $('.active').removeClass('active');
-        $(this).parent('li').addClass('active');
-        $(this).parents('.input-group-btn').find('.dropdown-toggle').html(selText + '<span class="caret"></span>');
+        $(this).addClass('active');
+        $(this).parents('.input-group-btn').find('.dropdown-toggle').html(selText + ' <span class="caret"></span>');
         searchBar.attr('placeholder', search_hint[selText]);
     });
 
@@ -261,10 +261,7 @@ function initSearchBar() {
  * Do search
  * @param searchTerm for now is a string of mood. It is better to make it as json object.
  */
-function doSearch(searchTerm) {
-    var searchTermObject = {
-        "mood" : searchTerm
-    };
+function doSearch(searchTermObject) {
     addSearchToHistory(searchTermObject);
     cleanSearchResult();
     searchArtistByCriteria(searchTermObject, showArtistSearchResult);
