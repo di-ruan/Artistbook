@@ -41,9 +41,13 @@ input[type=text] {
 }
 
 #main-search {
-    margin-top: 4px;
+    margin-top: 10px;
     margin-bottom: 4px;
     width: 100%;
+}
+
+#search-dropdown {
+    padding-top: 6px;
 }
 
 .input-group-btn {
