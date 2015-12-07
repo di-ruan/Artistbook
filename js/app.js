@@ -211,6 +211,7 @@ function setPlayWidgetUrl(url) {
 
 function initSearchBar() {
     var searchBar = $('#main-search'),
+        searchTermObject = {},
         timeoutId = null,
         searchTerm = '';
     
@@ -221,22 +222,39 @@ function initSearchBar() {
        
        timeoutId = setTimeout(function(){
            timeoutId = null;
-           
-           var searchVal = searchBar.val();           
-           
+
+           var searchVal = searchBar.val(),
+               searchType = $('.active').data("search");
+
            if (searchTerm == searchVal) {
                return;
            }
            
            searchTerm = searchVal;
-           
-           if (!searchTerm) {               
+
+           if (!searchTerm) {
                return;
            }
-           
-           doSearch(searchTerm);
-       }, 500);
+
+           searchTermObject[searchType] = searchTerm;
+           doSearch(searchTermObject);
+       }, 1000);
     });
+
+    $(".dropdown-menu li a").click(function(){
+        var search_hint = {
+            Name: 'Enter full or partial name of the artist...',
+            Genre: 'Enter genre of artists you are interested in...',
+            Style: 'Enter style of artists you are interested in...',
+            Mood: 'How do you feel like now?'
+        };
+        var selText = $(this).text();
+        $('.active').removeClass('active');
+        $(this).parent('li').addClass('active');
+        $(this).parents('.input-group-btn').find('.dropdown-toggle').html(selText + '<span class="caret"></span>');
+        searchBar.attr('placeholder', search_hint[selText]);
+    });
+
 }
 
 /**

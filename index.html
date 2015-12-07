@@ -17,7 +17,18 @@
                 <a id="help-button" title="Click this button for help"></a>
             </div>
             <div class="x-search-container">
-                <input type="text" id="main-search" placeholder="Enter your search term here..."/>
+                    <div class="input-group">
+                        <div class="input-group-btn" id="search-dropdown">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Search <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li class='active' data-search="name"><a href="#" >Name</a></li>
+                                <li data-search="genre"><a href="#">Genre</a></li>
+                                <li data-search="style"><a href="#">Style</a></li>
+                                <li data-search="name"><a href="#">Mood</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" id="main-search" placeholder="Enter full or partial name of the artist"/>
+                    </div>
             </div>
         </div>
         <div class="x-main-wrapper">
@@ -117,6 +128,7 @@
             </div>
         </div>
         <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/search.js"></script>
         <script src="js/app.js"></script>
