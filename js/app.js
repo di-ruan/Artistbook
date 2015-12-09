@@ -38,6 +38,7 @@ $(document).ready(function(){
     initTabs();
     initCollapse();
     initPicModal();
+    initHelpModal();
     initProfilePic();
     initSearchBar();
     initSearchResults();
@@ -146,6 +147,39 @@ function initPicModal() {
     x.click(function(e){
         e.preventDefault();
         hidePicModal();
+    });
+}
+
+function initHelpModal() {
+    var helpButton = $('#help-button'),
+        helpModal = $('#help-modal'),
+        win = helpModal.find('.x-modal-window'),
+        x = helpModal.find('.x-x'),
+        okButton = helpModal.find('.x-ok-btn');
+
+    helpButton.click(function(e){
+        e.preventDefault();
+        showHelpModal();
+    })
+    
+    okButton.click(function(e){
+        e.preventDefault();
+        hideHelpModal();
+    });
+    
+    win.click(function(e){
+        e.preventDefault();
+        return false;
+    });
+    
+    helpModal.click(function(e){
+        e.preventDefault();
+        hideHelpModal();
+    });
+    
+    x.click(function(e){
+        e.preventDefault();
+        hideHelpModal();
     })
 }
 
@@ -168,6 +202,16 @@ function showPicModal(picSrc) {
     
     imageModal.addClass('x-active');
     img.attr('src', picSrc);
+}
+
+function hideHelpModal() {
+    var helpModal = $('#help-modal');        
+    helpModal.removeClass('x-active');
+}
+
+function showHelpModal() {
+    var helpModal = $('#help-modal');    
+    helpModal.addClass('x-active'); 
 }
 
 /**
