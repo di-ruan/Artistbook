@@ -521,12 +521,47 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     bottom: 5px;
     left: 20px;
     right: 20px;
+    background: #282828;
+    height: 80px;    
+    overflow: hidden;
 }
 
-.x-play-widget-holder iframe {
-    width: 100%;
+.x-play-widget-holder .x-album-cover {
+    width: 80px;
     height: 80px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    float: left;
+    background-image: url(https://d3rt1990lpmkn.cloudfront.net/85/f8717f432506ab213c4de0c66d6ac24cd07ecf72);
 }
+
+.x-play-widget-holder .x-play-song-holder {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.x-play-widget-holder .x-song-name {
+    color: #fff;
+}
+
+.x-play-widget-holder .x-artist-name {
+    color: #a0a0a0;
+}
+
+.x-play-widget-holder .x-play-song-holder audio {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    max-width: 800px;
+    margin-left: 5px;
+}
+
+
 
 .x-modal {
     position: fixed;

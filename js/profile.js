@@ -294,8 +294,34 @@ function showTopTracks(tracks) {
 }
 
 // TODO
-function playSong(track) {
-    console.log('play song called', track);
+function playSong(track, preventPlay) {
+    var songName = track.name,
+        trackUrl = track.preview_url,
+        artists = track.artists,
+        playWidgetHolder = $('.x-play-widget-holder'),
+        albumCover = playWidgetHolder.find('.x-album-cover'),
+        songNameHolder = playWidgetHolder.find('.x-song-name'),
+        artistNameHolder = playWidgetHolder.find('.x-artist-name'),
+        playWidget = playWidgetHolder.find('#play-widget');
+
+    songNameHolder.text(songName);
+    artistNameHolder.text('');
+    albumCover.attr('style', 'background-image: url(no-img.png)'); // todo
+    
+    if(track.album && track.album.images && track.album.images.length){        
+        var images = track.album.images;
+        albumCover.attr('style', 'background-image: url(' + images[images.length - 1].url); // todo
+    }
+        
+    if (artists.length) {
+        artistNameHolder.text(artists[0].name);
+    }
+    
+    playWidget.attr('src', trackUrl);
+    
+    if(!preventPlay){
+        playWidget[0].play();
+    }
 }
 
 function getSimilarArtists(artist_id, artist) {
