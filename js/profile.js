@@ -104,20 +104,21 @@ function parseArticleDate(date) {
 }
 
 function getArtistInfo(artist_id) {
-	var link = 'http://developer.echonest.com/api/v4/artist/profile';
+	var link = 'http://developer.echonest.com/api/v4/artist/profile?' +
+        'bucket=hotttnesss_rank&bucket=genre&bucket=artist_location&bucket=years_active&bucket=urls';
 	$.ajax({
         url: link,
         data: { 
             "api_key": api_key,
             "id": 'spotify:artist:' + artist_id,
             "format": 'json',
-            "bucket": 'artist_location'
         },
         cache: true,
         type: "GET",
         success: function(response) {
-            if(response && response.response && response.response.artist.artist_location) {                
-                showArtistInfo(response.response.artist.artist_location);
+            console.log(response.response);
+            if(response && response.response && response.response.artist) {                
+                showArtistInfo(response.response.artist);
             }
         }
     });
@@ -127,15 +128,15 @@ function showArtistInfo(info) {
     var aboutTabContent = $("#profile-about-tab-content");    
     aboutTabContent.empty();
     
-    var center = info.location,
+    var center = info.artist_location.location,
         src = [
             'https://maps.googleapis.com/maps/api/staticmap?center=',
                 center,
-            '&zoom=7&size=300x300&maptype=roadmap&markers=color:blue%7C' + center        
+            '&zoom=5&size=150x150&maptype=roadmap&markers=color:blue%7C' + center        
         ],
         imgHtml = '<img src="' + src.join('') + '"/>',
         aboutHtml = [
-            '<h3>Location</h3>'
+            '<h4>Location</h4>'
         ];
         
     if (center) {
@@ -145,10 +146,23 @@ function showArtistInfo(info) {
     } 
         
     aboutHtml.push('<ul class="x-location-list">');
-        
-    $.each(info, function(key, value){
-        aboutHtml.push('<li><strong>' + ucFirst(key) + ':</strong> ' + value + '</li>');
-    });
+    
+    if(info.artist_location.location) {
+        aboutHtml.push('<li><strong>City: </strong> ' + info.artist_location.location + '</li>');    
+        aboutHtml.push('<li><strong>Country: </strong> ' + info.artist_location.country + '</li>');    
+    } 
+
+    if(info.hotttnesss_rank) {
+        aboutHtml.push('<li><strong>Hotness Rank: </strong> ' + info.hotttnesss_rank + '</li>');    
+    }
+
+    if(info.genres && info.genres.length > 0) {
+        var genres = "";
+        info.genres.forEach(function(genre) {
+             genres += genre.name + "   ";
+        });
+        aboutHtml.push('<li><strong>Genre: </strong> ' + genres + '</li>');  
+    }
     
     aboutHtml.push('</ul>');
     
@@ -336,7 +350,8 @@ function addSimilarArtists(artists) {
             followers = '<strong>Followers: </strong> ' + artist.followers.total;
         }
 
-        var artisHtmlArray = [
+        if(imgUrl) {
+            var artisHtmlArray = [
             '<div class="x-similar-artist-holder">',
                  '<div class="x-similar-artist-photo-holder" style="background-image: url(',
                      imgUrl,
@@ -353,17 +368,17 @@ function addSimilarArtists(artists) {
                     '</div>',
                  '</div>',
             '</div>'
-        ];
+            ];
         
-        var artistHtml = $(artisHtmlArray.join('')),
+            var artistHtml = $(artisHtmlArray.join('')),
             h4 = artistHtml.find('h4');
         
-        h4.click(function(e){
-            e.preventDefault();            
-            loadProfile(artist.id);
-        });
-        
-        similarArtistsContent.append(artistHtml);
+            h4.click(function(e){
+                e.preventDefault();            
+                loadProfile(artist.id);
+            });
+            similarArtistsContent.append(artistHtml);
+        }
     });        
 }
 
