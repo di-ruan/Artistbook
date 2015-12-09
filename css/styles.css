@@ -61,6 +61,11 @@ input[type=text] {
     color: #9197a3;
     background-color: #f6f7f8;
     border-bottom: 1px solid #e9eaed;
+    text-align: left;
+    text-transform: uppercase;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 #search-results.x-display {
