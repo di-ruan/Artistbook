@@ -34,10 +34,77 @@ input[type=text] {
     float: right;
 }
 
-.x-search-container {
-    width: 500px;
+.x-search-container, #search-results {
+    width: 500px;   
+}
+.x-search-container {    
     margin: 0 auto;
     text-align: center;
+    overflow-x: hidden;
+}
+
+#search-results {
+    position: fixed;
+    min-height: 300px;
+    max-height: 400px;
+    height: 60%;
+    z-index: 100;
+    background-color: #fff;
+    display: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+#search-results .x-section-header {
+    color: #9197a3;
+    background-color: #f6f7f8;
+    border-bottom: 1px solid #e9eaed;
+}
+
+#search-results.x-display {
+    display: block;
+}
+
+#search-results .x-artist-search-result {
+    width: 100%;
+    overflow: hidden;     
+    cursor: pointer;
+    padding: 5px;
+}
+
+#search-results .x-artist-search-result:hover {    
+    background-color: #e5e5e5;
+}
+
+#search-results .x-artist-search-result .x-artist-img-holder {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    float: left;    
+}
+
+#search-results .x-artist-search-result .x-artist-info {
+    overflow: hidden;    
+} 
+
+#search-results .x-artist-search-result .x-artist-info h4 {
+    text-align: left;
+    padding: 0;
+    margin: 5px;
+    font-weight: normal;
+    color: #373e4d;
+    font-size: 14px;
+}
+
+#search-results .x-artist-search-result .x-artist-info .x-artist-num-followers {
+    color: #555;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 #main-search {

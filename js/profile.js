@@ -1,4 +1,5 @@
-function getArtistPictureAndName(artist_id) {
+function getArtistPictureAndName(artist_id, artist) {
+    artist = artist || {};
     var link = 'https://api.spotify.com/v1/artists/' + artist_id;
     $.ajax({
         url: link,
@@ -7,7 +8,10 @@ function getArtistPictureAndName(artist_id) {
         success: function(response) {
             if(response && response.images && response.images.length > 0) {
                 showArtistPicture(response.images[0].url);
+                artist.image_url = response.images[0].url;
             }
+            
+            artist.name = response.name;
             showArtistName(response.name);
         }
     });
@@ -21,7 +25,8 @@ function showArtistName(name) {
     $("#profile-name").text(name);
 }
 
-function getArtistNews(artist_id) {
+function getArtistNews(artist_id, artist) {
+        artist = artist || {};
 	var link = 'http://developer.echonest.com/api/v4/artist/news';
 	$.ajax({
         url: link,
@@ -34,6 +39,7 @@ function getArtistNews(artist_id) {
         type: "GET",
         success: function(response) {
             if(response && response.response && response.response.news) {
+                artist.news = response.response.news;
                 showArtistNews(response.response.news);
             }
         }
@@ -103,7 +109,9 @@ function parseArticleDate(date) {
     return month + '/' + day + '/' + year;        
 }
 
-function getArtistInfo(artist_id) {
+function getArtistInfo(artist_id, artist) {
+        artist = artist || {};
+        
 	var link = 'http://developer.echonest.com/api/v4/artist/profile?' +
         'bucket=hotttnesss_rank&bucket=genre&bucket=artist_location&bucket=years_active&bucket=urls';
 	$.ajax({
@@ -118,6 +126,7 @@ function getArtistInfo(artist_id) {
         success: function(response) {
             console.log(response.response);
             if(response && response.response && response.response.artist) {                
+                artist.info = response.response.artist;
                 showArtistInfo(response.response.artist);
             }
         }
@@ -171,7 +180,9 @@ function showArtistInfo(info) {
     aboutTabContent.append(aboutHtml.join(''));
 }
 
-function getArtistImage(artist_id) {
+function getArtistImage(artist_id, artist) {
+        artist = artist || {};
+        
 	var link = 'http://developer.echonest.com/api/v4/artist/images';
 	$.ajax({
         url: link,
@@ -185,6 +196,7 @@ function getArtistImage(artist_id) {
         type: "GET",
         success: function(response) {
             if(response && response.response && response.response.images) {
+                artist.images = response.response.images;
                 showArtistImage(response.response.images);
             }
         }
@@ -216,7 +228,9 @@ function showArtistImage(images) {
     });    
 }
 
-function getTopTracks(artist_id) {
+function getTopTracks(artist_id, artist) {
+    artist = artist || {};
+    
     var link = 'https://api.spotify.com/v1/artists/' + artist_id + '/top-tracks';
     $.ajax({
         url: link,
@@ -227,6 +241,7 @@ function getTopTracks(artist_id) {
         type: "GET",
         success: function(response) {           
             if(response && response.tracks) {
+                artist.tracks = response.tracks;
                 showTopTracks(response.tracks);
             }
         }
@@ -283,7 +298,9 @@ function playSong(track) {
     console.log('play song called', track);
 }
 
-function getSimilarArtists(artist_id) {
+function getSimilarArtists(artist_id, artist) {
+    artist = artist || {};
+    
     var link = 'http://developer.echonest.com/api/v4/artist/similar';
     $.ajax({
         url: link,
@@ -298,6 +315,7 @@ function getSimilarArtists(artist_id) {
         type: "GET",
         success: function(response) {           
             if(response && response.response && response.response.artists) {
+                artist.similar_artists = response.response.artists;
                 showSimilarArtists(response.response.artists);
             }
         }

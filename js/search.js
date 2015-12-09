@@ -126,11 +126,27 @@ function getMoodList(rst) {
 }
 
 var cleanSearchResult = function () {
-  $('#search-results-tab-content').empty();
+  $('#search-results').empty();
 };
 
 // TODO: should show artists in search results
-var showArtistSearchResult = function(a) {
+var showArtistSearchResult = function(a) { 
+  var artist = {
+      id: a.id,
+      image_url: null,
+      name: a.name,
+      hotness: a.hotttnesss.toFixed(2)
+  };
+    
+  if (a.images.length > 0) {
+    artist.image_url = a.images[0].url;
+  }
+  
+  addArtistToSearchResults(artist);
+};
+
+// TODO: should show artists in search results
+var showArtistSearchResult2 = function(a) {    
   var img;
   if (a.images.length > 0) {
     img = a.images[0].url;

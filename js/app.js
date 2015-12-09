@@ -9,10 +9,14 @@ var sa = {
             photos: 'profile-photos-tab',
             songs: 'profile-songs-tab',
             following: 'following-tab',
-            history: 'history-tab',
-            searchresults: 'search-results-tab'
-        }
-    }
+            history: 'history-tab'
+        },
+        maxArtistHistorySave: 20
+    },
+    historyVersion: 1,
+    currentArtist: null,
+    artistHistory: [],
+    artistHistoryDictionary: {}
 };
 
 var artist_id1 = "43ZHCT0cAZBISjO8DG9PnE";
@@ -29,22 +33,31 @@ var genre_list = [], style_list = [], mood_list = [];
 /**
  * Initializes the events
  */
-$(document).ready(function(){
+$(document).ready(function(){    
+    loadArtistHistory();
     initTabs();
     initPicModal();
     initProfilePic();
     initSearchBar();
+    initSearchResults();
     loadProfile(artist_id1);
-    initMetadata();
+    initMetadata();    
 });
 
 function loadProfile(id) {
-    getArtistPictureAndName(id);
-    getTopTracks(id);
-    getArtistNews(id);
-    getArtistInfo(id);
-    getArtistImage(id);
-    getSimilarArtists(id);
+    var artist = {
+        id: id
+    };
+    
+    sa.currentArtist  = artist;
+    addArtistToHistory(artist);
+    
+    getArtistPictureAndName(id, artist);
+    getTopTracks(id, artist);
+    getArtistNews(id, artist);
+    getArtistInfo(id, artist);
+    getArtistImage(id, artist);
+    getSimilarArtists(id, artist);
     setFollowWidgetUrl(id);
 }
 
@@ -233,6 +246,7 @@ function initSearchBar() {
            searchTerm = searchVal;
 
            if (!searchTerm) {
+               showArtistHistoryToSearchResults();
                return;
            }
 
@@ -264,6 +278,7 @@ function initSearchBar() {
 function doSearch(searchTermObject) {
     addSearchToHistory(searchTermObject);
     cleanSearchResult();
+    
     searchArtistByCriteria(searchTermObject, showArtistSearchResult);
 }
 
@@ -277,4 +292,115 @@ function initMetadata() {
     getMoodList(mood_list);
     showSearchHistory();
     getFollowingList(showFollowingList);
+}
+
+function initSearchResults(){
+    var searchBar = $('#main-search'),
+        searchResults = $('#search-results');
+
+    searchBar.focus(function(e){
+        e.preventDefault();
+        
+        if (!searchBar.val()) {
+            showArtistHistoryToSearchResults();
+        }
+        
+        searchResults.addClass('x-display');
+    });
+    
+    searchBar.blur(function(e){            
+        setTimeout(function(){
+            searchResults.removeClass('x-display');   
+        }, 200);
+    });
+}
+
+function showArtistHistoryToSearchResults() {
+    var searchResults = $('#search-results'),
+        history = sa.artistHistory;
+
+    searchResults.empty();
+    
+    searchResults.append('<div class="x-section-header">Recent Searches</div>');
+    
+    history.forEach(function(historyArtist) {
+        addArtistToSearchResults(historyArtist);
+    });
+}
+
+function addArtistToSearchResults(artist) {
+    var searchResults = $('#search-results');
+    var artistHtml = [
+        '<div class="x-artist-search-result">',
+            '<div class="x-artist-img-holder"style="background-image: url(', 
+                    artist.image_url + ')">',
+            '</div>',
+            '<div class="x-artist-info">',
+                '<div class="x-artist-name">',
+                    '<h4>',
+                        artist.name,
+                    '</h4>',
+                '</div>',
+                '<div class="x-artist-num-followers">',
+
+                '</div>',
+            '</div>',
+        '</div>'
+    ];
+
+    var html = $(artistHtml.join('')); 
+    
+    html.click(function(e){
+        e.preventDefault();
+        loadProfile(artist.id);
+    });
+    
+    searchResults.append(html);
+}
+
+function addArtistToHistory(artist) {    
+    var newDictionary = {},
+        newArray = [],
+        i = 0;
+
+    sa.artistHistory.forEach(function(historyArtist){
+        if (i >= sa.config.maxArtistHistorySave - 1) {
+            return false;
+        }
+        
+        //Skip it
+        if (artist.id == historyArtist.id) {
+            return;
+        }
+        
+        i++;       
+        newDictionary[historyArtist.id] = historyArtist;
+        newArray.push(historyArtist);
+    });
+    
+    newArray.unshift(artist);
+    newDictionary[artist.id] = artist;
+    
+    sa.artistHistory = newArray;
+    sa.artistHistoryDictionary = newDictionary;
+    
+    setTimeout(function(){
+        saveArtistHistory();
+    }, 2500);
+}
+
+function saveArtistHistory() {
+    localStorage.setItem('artist-history', JSON.stringify(sa.artistHistory));    
+}
+
+function loadArtistHistory(){
+    var historyArray = localStorage.getItem('artist-history');
+    
+    if (historyArray) {
+        sa.artistHistory = JSON.parse(historyArray);
+        
+        sa.artistHistory.forEach(function(artist){
+           sa.artistHistory[artist.id] = artist;
+        });
+    }
 }
