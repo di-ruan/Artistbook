@@ -40,7 +40,6 @@ input[type=text] {
 .x-search-container {    
     margin: 0 auto;
     text-align: center;
-    overflow-x: hidden;
 }
 
 #search-results {
