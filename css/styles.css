@@ -207,14 +207,46 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 }
 /* Tabs end */
 
-
 #main-left-pane {
     float: left;
-    width: 350px;
-    overflow: hidden;
     border-right: 1px solid #aaa;
     height: 100%;
     position: relative;
+}
+
+#main-left-pane .x-left-pane-inner {    
+    overflow: hidden;
+    width: 350px;
+}
+
+#main-left-pane.x-collapsed .x-left-pane-inner{
+    display: none;
+}
+
+#main-left-pane .x-drawer-handle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    height: 60px;
+    width: 15px;
+    cursor: pointer;
+    z-index: 100;
+    background-repeat: no-repeat;    
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #fff;
+    background-position: -2px 19px;
+    border: 1px solid #ccc;
+    border-radius: 0 5px 5px 0;
+}
+
+#main-left-pane .x-drawer-handle {
+    background-image: url(icons/collapse-icon-left.png);
+}
+
+#main-left-pane.x-collapsed .x-drawer-handle {
+    background-image: url(icons/collapse-icon-right.png);
+    background-position: 1px 19px;
 }
 
 #left-pane-tab-content {

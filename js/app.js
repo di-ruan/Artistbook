@@ -36,6 +36,7 @@ var genre_list = [], style_list = [], mood_list = [];
 $(document).ready(function(){    
     loadArtistHistory();
     initTabs();
+    initCollapse();
     initPicModal();
     initProfilePic();
     initSearchBar();
@@ -312,6 +313,16 @@ function initSearchResults(){
         setTimeout(function(){
             searchResults.removeClass('x-display');   
         }, 200);
+    });
+}
+
+function initCollapse() {
+    var leftPane = $('#main-left-pane'),
+        handle = leftPane.find('.x-drawer-handle');
+
+    handle.click(function(e){
+        e.preventDefault();
+        leftPane.toggleClass('x-collapsed');
     });
 }
 
