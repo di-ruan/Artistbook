@@ -322,6 +322,9 @@ function playSong(track, preventPlay) {
     if(!preventPlay){
         playWidget[0].play();
     }
+    
+    sa.state.playingSong = track;
+    saveState();
 }
 
 function getSimilarArtists(artist_id, artist) {

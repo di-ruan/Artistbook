@@ -35,7 +35,8 @@ function searchArtistByCriteria(searchTerms, next) {
     success: function(response) {
       if(response && response.response && response.response.artists) {
         if (next) {
-          response.response.artists.forEach(function(e) {
+          sa.state.searchResults = [];
+          response.response.artists.forEach(function(e) {            
             var spotifyId = e.foreign_ids[0].foreign_id.substring('spotify:artist:'.length);
             e.id = spotifyId;
             getArtistPicture(spotifyId, function (err, imgUrl) {

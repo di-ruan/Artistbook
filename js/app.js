@@ -11,15 +11,31 @@ var sa = {
             following: 'following-tab',
             history: 'history-tab'
         },
-        maxArtistHistorySave: 20
+        maxArtistHistorySave: 20,
+        preventSearch: false,
+        defaultArtistId: "43ZHCT0cAZBISjO8DG9PnE"
     },
-    historyVersion: 1,
-    currentArtist: null,
+    historyVersion: 1,    
     artistHistory: [],
-    artistHistoryDictionary: {}
+    artistHistoryDictionary: {},
+    state: {
+        selectedSearchTab: null,
+        selectedProfileTab: null,
+        selectedSearchBy: null,
+        searchTerm: null,
+        profileArtist: null,
+        playingSong: null,
+        isHelpModalOpen: false,
+        leftPaneCollapsed: false,
+        searchResults: [],
+        searchResultsExpanded: false,
+        pictureModal: {
+            open: false,
+            url: ''
+        }
+    }
 };
 
-var artist_id1 = "43ZHCT0cAZBISjO8DG9PnE";
 var artist_id2 = "2XBzvyw3fwtZu4iUz12x0G";
 var api_key = "XUYQDKM596JS3A6GC";
 // this token should be replaced every time running.
@@ -33,8 +49,7 @@ var genre_list = [], style_list = [], mood_list = [];
 /**
  * Initializes the events
  */
-$(document).ready(function(){    
-    loadArtistHistory();
+$(document).ready(function(){        
     initTabs();
     initCollapse();
     initPicModal();
@@ -42,8 +57,15 @@ $(document).ready(function(){
     initProfilePic();
     initSearchBar();
     initSearchResults();
-    loadProfile(artist_id1);
-    initMetadata();    
+    initMetadata();
+    
+    var stateLoaded = loadState();
+    
+    if (!stateLoaded) {        
+        loadProfile(sa.config.defaultArtistId);
+    }
+    
+    loadArtistHistory();    
 });
 
 function loadProfile(id) {
@@ -51,7 +73,8 @@ function loadProfile(id) {
         id: id
     };
     
-    sa.currentArtist  = artist;
+    sa.state.profileArtist  = artist;
+    
     addArtistToHistory(artist);
     
     getArtistPictureAndName(id, artist);
@@ -61,6 +84,12 @@ function loadProfile(id) {
     getArtistImage(id, artist);
     getSimilarArtists(id, artist);
     setFollowWidgetUrl(id);
+    
+    
+    // Let the AJAX functions load
+    setTimeout(function(){
+        saveState();
+    }, 3000);
 }
 
 /**
@@ -71,9 +100,11 @@ function initTabs() {
     
     tabs.click(function(){
        var tab = $(this),
+            tabId = tab.attr('id'),            
             contentId = '#' + tab.attr('data-content'),            
             content = $(contentId),
             tabsList = tab.closest('.x-tabs'),
+            stateKey = tabsList.attr('data-state-key'),
             contentHolderId = '#' + tabsList.attr('data-content-holder'),
             contentHolder = $(contentHolderId),
             contents = contentHolder.find('.x-tab-content'),
@@ -84,6 +115,11 @@ function initTabs() {
        
        contents.removeClass('x-active');
        content.addClass('x-active');
+       
+       if(stateKey) {
+           sa.state[stateKey] = tabId;
+           saveState();
+       }       
     });   
 }
 
@@ -187,9 +223,12 @@ function initHelpModal() {
  * Hides the pic modal
  */
 function hidePicModal() {
-    var imageModal = $('#image-modal');      
-    
+    var imageModal = $('#image-modal');         
     imageModal.removeClass('x-active');
+        
+    sa.state.pictureModal.open = false;
+    sa.state.pictureModal.url = null;
+    saveState();
 }
 
 /**
@@ -199,19 +238,28 @@ function hidePicModal() {
 function showPicModal(picSrc) {
     var imageModal = $('#image-modal'),
         img = imageModal.find('img');
-    
+        
     imageModal.addClass('x-active');
     img.attr('src', picSrc);
+    
+    sa.state.pictureModal.open = true;
+    sa.state.pictureModal.url = picSrc;
+    saveState();
 }
 
 function hideHelpModal() {
     var helpModal = $('#help-modal');        
     helpModal.removeClass('x-active');
+    sa.state.isHelpModalOpen = false;
+    saveState();
 }
 
 function showHelpModal() {
     var helpModal = $('#help-modal');    
     helpModal.addClass('x-active'); 
+    
+    sa.state.isHelpModalOpen = true;
+    saveState();
 }
 
 /**
@@ -271,20 +319,27 @@ function initSearchBar() {
     var searchBar = $('#main-search'),
         searchTermObject = {},
         timeoutId = null,
-        searchTerm = '';
+        searchTerm = null;
     
-    searchBar.on("input change keyup paste", function() {                 
+    searchBar.on("input change keyup paste", function(e) {          
+        if (sa.config.preventSearch) {
+            return;
+        }
+        
        if (timeoutId) {
            clearTimeout(timeoutId);
        }
        
-       timeoutId = setTimeout(function(){
+       timeoutId = setTimeout(function(){                       
            timeoutId = null;
 
            var searchVal = searchBar.val(),
                searchType = $('.active').data("search");
 
-           if (searchTerm == searchVal) {
+           sa.state.searchTerm = searchVal;
+           saveState();
+
+           if (searchTerm === searchVal) {
                return;
            }
            
@@ -296,7 +351,7 @@ function initSearchBar() {
            }
 
            searchTermObject[searchType] = searchTerm;
-           doSearch(searchTermObject);
+           doSearch(searchTermObject, searchType, searchTerm);
        }, 1000);
     });
 
@@ -320,11 +375,10 @@ function initSearchBar() {
  * Do search
  * @param searchTerm for now is a string of mood. It is better to make it as json object.
  */
-function doSearch(searchTermObject) {
+function doSearch(searchTermObject, searchType, searchTerm) {        
     addSearchToHistory(searchTermObject);
-    cleanSearchResult();
-    
-    searchArtistByCriteria(searchTermObject, showArtistSearchResult);
+    cleanSearchResult();    
+    searchArtistByCriteria(searchTermObject, showArtistSearchResult);    
 }
 
 /**
@@ -351,11 +405,15 @@ function initSearchResults(){
         }
         
         searchResults.addClass('x-display');
+        sa.state.searchResultsExpanded = true;
+        saveState();
     });
     
     searchBar.blur(function(e){            
         setTimeout(function(){
             searchResults.removeClass('x-display');   
+            sa.state.searchResultsExpanded = false;
+            saveState();
         }, 200);
     });
 }
@@ -379,11 +437,11 @@ function showArtistHistoryToSearchResults() {
     searchResults.append('<div class="x-section-header">Recent Searches</div>');
     
     history.forEach(function(historyArtist) {
-        addArtistToSearchResults(historyArtist);
+        addArtistToSearchResults(historyArtist, true);
     });
 }
 
-function addArtistToSearchResults(artist) {
+function addArtistToSearchResults(artist, preventAddToState) {        
     var searchResults = $('#search-results');
     var artistHtml = [
         '<div class="x-artist-search-result">',
@@ -411,6 +469,11 @@ function addArtistToSearchResults(artist) {
     });
     
     searchResults.append(html);
+    
+    if (!preventAddToState) {
+        sa.state.searchResults.push(artist);
+        saveState();
+    }
 }
 
 function addArtistToHistory(artist) {    
@@ -458,4 +521,79 @@ function loadArtistHistory(){
            sa.artistHistory[artist.id] = artist;
         });
     }
+}
+
+function loadState() {
+    var stateJson = localStorage.getItem('saved-state');
+    
+    if (!stateJson) {
+        return false;
+    }
+    
+    sa.state = JSON.parse(stateJson);
+    
+    var state = sa.state;
+    
+    if (state.selectedSearchTab) {
+        selectTab(state.selectedSearchTab);
+    }
+    
+    if (state.selectedProfileTab) {
+        selectTab(state.selectedProfileTab);
+    }
+    
+    if (state.searchTerm) {        
+        $('#main-search').val(state.searchTerm);
+    }
+    
+    if (state.searchResults && state.searchResults.length) {
+        var searchResults = state.searchResults;
+        
+        state.searchResults = [];
+        
+        searchResults.forEach(function(artist){
+            addArtistToSearchResults(artist);
+        });                
+    }
+    
+    if (state.searchResultsExpanded) {
+        sa.config.preventSearch = true;
+        $('#main-search').trigger('focus');
+        
+        setTimeout(function(){
+            sa.config.preventSearch = false;  
+        }, 200);
+    }
+    
+    if (state.pictureModal && state.pictureModal.open && state.pictureModal.url) {
+        showPicModal(state.pictureModal.url);
+    }
+    
+    if (state.isHelpModalOpen) {
+        showHelpModal();
+    }
+    
+    
+    if (state.profileArtist) {
+        var artist = state.profileArtist;
+        
+        showArtistPicture(artist.image_url);
+        showArtistName(artist.name);
+        showArtistNews(artist.news);
+        showArtistInfo(artist.info);
+        showArtistImage(artist.images);
+        showSimilarArtists(artist.similar_artists);
+        setFollowWidgetUrl(artist.id);
+        showTopTracks(artist.tracks);                
+    }
+    
+    if (state.playingSong) {
+        playSong(state.playingSong, true);
+    }        
+    
+    return true;
+}
+
+function saveState() {
+    localStorage.setItem('saved-state', JSON.stringify(sa.state));
 }
