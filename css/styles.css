@@ -35,11 +35,11 @@ input[type=text] {
 }
 
 .x-search-container, #search-results {
-    width: 500px;   
+    width: 450px;   
 }
 .x-search-container {    
     margin: 0 auto;
-    text-align: center;
+    margin-left: 250px;
 }
 
 #search-results {
@@ -216,7 +216,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 #main-left-pane .x-left-pane-inner {    
     overflow: hidden;
-    width: 350px;
+    width: 250px;
 }
 
 #main-left-pane.x-collapsed .x-left-pane-inner{
