@@ -18,14 +18,16 @@ function searchArtistByCriteria(searchTerms, next) {
   var q = {
     "api_key" : api_key,
     "bucket" : ["images", "hotttnesss", "genre", "id:spotify"],
-    "sort" : "hotttnesss-desc",
-    "artist_location" : "country:united states"
   };
-  ["genre", "style", "mood", "artist_start_year_before"].forEach(function(e) {
+  ["name", "genre", "style", "mood", "artist_start_year_before"].forEach(function(e) {
     if (e in searchTerms) {
       q[e] = searchTerms[e];
     }
   });
+  if (!q.name) {
+    q.artist_location = "country:united states";
+    q.sort = "hotttnesss-desc";
+  }
   $.ajax({
     url: uri,
     data: q,
