@@ -38,11 +38,20 @@ function searchArtistByCriteria(searchTerms, next) {
       if(response && response.response && response.response.artists) {
         if (next) {
           sa.state.searchResults = [];
-          response.response.artists.forEach(function(e) {            
+          response.response.artists.forEach(function(e) {
+            if (!e || !e.foreign_ids || e.foreign_ids.length <= 0) {
+              console.log('skipped one search result: no spotify id');
+              return;
+            }
             var spotifyId = e.foreign_ids[0].foreign_id.substring('spotify:artist:'.length);
             e.id = spotifyId;
             getArtistPicture(spotifyId, function (err, imgUrl) {
-              e.images[0].url = imgUrl;
+              if (err) {
+                return;
+              }
+              console.log('img url: ' + imgUrl);
+              e.images = [];
+              e.images.push({'url' : imgUrl});
               next(e);
             });
           });
@@ -259,7 +268,22 @@ function getFollowingList(next) {
 var showFollowingList = function(artists) {
   $('#following-tab-content').empty();
   artists.forEach(function(a) {
-    $('#following-tab-content').append('<li>' + a.name + '</li>');
+    var img = 'no img';
+    if (a.images && a.images.length > 0) {
+      img = a.images[0].url;
+    }
+    var htmlString = '<div class="media s-artist-row">' +
+      '<div class="media-left">' +
+      '<a href="#">' +
+      '<img class="media-object s-artist-icon-64" id="s-result-icon" data-spotifyid="' + a.id +
+      '"src="' + img + '" alt="Artist">' +
+      '</a>' +
+      '</div>' +
+      '<div class="media-body s-artist-holder">' +
+      '<h5 class="media-heading">' + a.name + '</h5>' +
+      '</div>' +
+      '</div>';
+    $('#following-tab-content').append(htmlString);
   });
 };
 
@@ -278,3 +302,42 @@ function getArtistPicture(artist_id, next) {
     }
   });
 }
+
+var addArtistToVisitHistory = function(artist) {
+  if (!localStorage.getItem('v-history')) {
+    localStorage.setItem('v-history', '[]');
+  }
+  var vHistory = JSON.parse(localStorage.getItem('v-history'));
+  for (var i = 0; i < vHistory.length; ++i) {
+    if (vHistory[i].id === artist.id) {
+      vHistory.splice(i, 1);
+      i--;
+    }
+  }
+  vHistory.splice(0, 0, artist);
+  localStorage.setItem('v-history', JSON.stringify(vHistory));
+  displayVisitHistory();
+};
+
+var displayVisitHistory = function() {
+  if (!localStorage.getItem('v-history')) {
+    return;
+  }
+  var $h = $("#history-tab-content");
+  $h.empty();
+  var vHistory = JSON.parse(localStorage.getItem('v-history'));
+  vHistory.forEach(function(a) {
+    var htmlString = '<div class="media s-artist-row">' +
+      '<div class="media-left">' +
+      '<a href="#">' +
+      '<img class="media-object s-artist-icon-64" id="s-result-icon" data-spotifyid="' + a.id +
+      '"src="' + a.image_url + '" alt="Artist">' +
+      '</a>' +
+      '</div>' +
+      '<div class="media-body s-artist-holder">' +
+      '<h5 class="media-heading">' + a.name + '</h5>' +
+      '</div>' +
+      '</div>';
+    $h.append(htmlString);
+  });
+};

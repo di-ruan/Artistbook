@@ -38,8 +38,8 @@ var sa = {
 
 var artist_id2 = "2XBzvyw3fwtZu4iUz12x0G";
 var api_key = "XUYQDKM596JS3A6GC";
-// this token should be replaced every time running.
-var access_token = 'BQCVwdHEh7-p6jZ4mvKyZBG6PUtzErnAG7RwsT5oV2sAtFNlETEtc2GZESOth7hZbRY8N3n2Dk34H69b_YzAJqVyN6y3DspWc80Y2IowrVwyuaBAHjTTY6AwPR9aqi9Zrv46sGyH_TV7hNBbPIT9_U4AosiTDLLekiLChDrE7hdCKyHY1ZnKGtx5hnY';
+// this token should be replaced every time from http://http://spotartist-web-auth.mybluemix.net/
+var access_token = 'BQCcZeGkKpgDv5LeeQZXcYPNjpXy9Dc6BaEDpAUaq1SWlFjLQnZA1ozGnAlg9m9OEMRj_m25YZoZy2LcvnDm6a1vDqtjmU1wpQdx8mJm0_ZjZd31VoJy3WhnWRcTYS9sh8EnCIS1c_nlCzjy-YT8wh_8lkcykwizWjODYyscL3SyrVWUP2BgsZEHJk8';
 
 //TODO: autocomplete for searching by genre, style or mood
 // when searching for genre, style or mood, we need have a autocomplete from the list and
@@ -77,15 +77,14 @@ function loadProfile(id) {
     
     addArtistToHistory(artist);
     
-    getArtistPictureAndName(id, artist);
+    getArtistPictureAndName(id, artist, addArtistToVisitHistory);
     getTopTracks(id, artist);
     getArtistNews(id, artist);
     getArtistInfo(id, artist);
     getArtistImage(id, artist);
     getSimilarArtists(id, artist);
     setFollowWidgetUrl(id);
-    
-    
+
     // Let the AJAX functions load
     setTimeout(function(){
         saveState();
@@ -351,7 +350,7 @@ function initSearchBar() {
            }
 
            searchTermObject[searchType] = searchTerm;
-           doSearch(searchTermObject, searchType, searchTerm);
+           doSearch(searchTermObject);
        }, 1000);
     });
 
@@ -375,10 +374,9 @@ function initSearchBar() {
  * Do search
  * @param searchTerm for now is a string of mood. It is better to make it as json object.
  */
-function doSearch(searchTermObject, searchType, searchTerm) {        
-    addSearchToHistory(searchTermObject);
-    cleanSearchResult();    
-    searchArtistByCriteria(searchTermObject, showArtistSearchResult);    
+function doSearch(searchTermObject) {
+    $('#search-results').empty();
+    searchArtistByCriteria(searchTermObject, showArtistSearchResult);
 }
 
 /**
@@ -389,8 +387,8 @@ function initMetadata() {
     getGenreList(genre_list);
     getStyleList(style_list);
     getMoodList(mood_list);
-    showSearchHistory();
     getFollowingList(showFollowingList);
+    displayVisitHistory();
 }
 
 function initSearchResults(){
@@ -441,7 +439,7 @@ function showArtistHistoryToSearchResults() {
     });
 }
 
-function addArtistToSearchResults(artist, preventAddToState) {        
+function addArtistToSearchResults(artist, preventAddToState) {
     var searchResults = $('#search-results');
     var artistHtml = [
         '<div class="x-artist-search-result">',

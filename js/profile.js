@@ -1,4 +1,10 @@
-function getArtistPictureAndName(artist_id, artist) {
+/**
+ * getArtistPictureAndName
+ * @param artist_id
+ * @param artist
+ * @param next callback function taking artist result as input
+ */
+function getArtistPictureAndName(artist_id, artist, next) {
     artist = artist || {};
     var link = 'https://api.spotify.com/v1/artists/' + artist_id;
     $.ajax({
@@ -13,6 +19,9 @@ function getArtistPictureAndName(artist_id, artist) {
             
             artist.name = response.name;
             showArtistName(response.name);
+            if (next) {
+                next(artist);
+            }
         }
     });
 }
@@ -421,7 +430,7 @@ function addSimilarArtists(artists) {
             h4 = artistHtml.find('h4');
         
             h4.click(function(e){
-                e.preventDefault();            
+                e.preventDefault();
                 loadProfile(artist.id);
             });
             similarArtistsContent.append(artistHtml);
