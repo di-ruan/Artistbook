@@ -150,7 +150,7 @@ function showArtistInfo(info) {
         src = [
             'https://maps.googleapis.com/maps/api/staticmap?center=',
                 center,
-            '&zoom=5&size=150x150&maptype=roadmap&markers=color:blue%7C' + center        
+            '&zoom=5&size=200x200&maptype=roadmap&markers=color:blue%7C' + center        
         ],
         imgHtml = '<img src="' + src.join('') + '"/>',
         aboutHtml = [

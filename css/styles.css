@@ -376,11 +376,11 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 #profile-about-tab-content .x-map-holder{
     overflow: hidden;
     float: left;
-    margin: 16px 0 0 16px;
+    margin-left: 16px;
 }
 
 #profile-about-tab-content .x-map-holder img {
-    width: 300px;
+    max-width: 100%;
 }
 
 #profile-tab-content .x-tab-content {
@@ -471,6 +471,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     margin-bottom: 5px;
     padding: 0;
     color: #3b5998;
+    font-size: 16px;
 }
 
 #profile-songs-tab-content .x-track-info .x-track-album {
@@ -508,6 +509,7 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     margin: 5px;
     color: #3b5998;    
     cursor: pointer;
+    font-size: 16px;
 }
 
 #profile-artists-tab-content .x-similar-artist-holder .x-similar-artist-info .x-similar-artist-num-followers {
