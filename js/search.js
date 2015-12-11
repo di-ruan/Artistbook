@@ -137,12 +137,7 @@ function getMoodList(rst) {
   });
 }
 
-var cleanSearchResult = function () {
-  $('#search-results').empty();
-};
-
-// TODO: should show artists in search results
-var showArtistSearchResult = function(a) { 
+var showArtistSearchResult = function(a) {
   var artist = {
       id: a.id,
       image_url: null,
@@ -157,93 +152,12 @@ var showArtistSearchResult = function(a) {
   addArtistToSearchResults(artist);
 };
 
-// TODO: should show artists in search results
-var showArtistSearchResult2 = function(a) {    
-  var img;
-  if (a.images.length > 0) {
-    img = a.images[0].url;
-  } else {
-    img = "no img";
-  }
-  var htmlString = '<div class="media s-artist-row">' +
-    '<div class="media-left">' +
-    '<a href="#">' +
-    '<img class="media-object s-artist-icon-64" id="s-result-icon" data-spotifyid="' + a.id +
-    '"src="' + img + '" alt="Artist">' +
-    '</a>' +
-    '</div>' +
-    '<div class="media-body s-artist-holder">' +
-    '<h5 class="media-heading">' + a.name + '</h5>' +
-    '<p><img class="s-heat-icon" src="img/heat.png">' + a.hotttnesss.toFixed(2) + '</p>' +
-    '</div>' +
-    '</div>';
-  $('#search-results-tab-content').append(htmlString);
-};
-
-// TODO: should show search history
-var showSearchHistory = function() {
-  var history = getSearchHistory();
-  console.log("TODO: should show search history");
-  console.log(history);
-  $("#history-tab-content").empty();
-  history.forEach(function(h) {
-    $("#history-tab-content").append('<li>' + JSON.stringify(h) + '</li>');
-  });
-};
-
-/**
- * update search history both in storage and UI, return true if added, otherwise false
- * @param searchTerms
- * @returns {boolean}
- */
-var addSearchToHistory = function(searchTerms) {
-  var history = getSearchHistory();
-  var toAdd = true;
-  for (var i in history) {
-    if (isEquivalent(history[i], searchTerms)) {
-      toAdd = false;
-      break;
-    }
-  }
-  if (toAdd) {
-    history.push(searchTerms);
-    setSearchHistory(history);
-    showSearchHistory();
-  }
-  return toAdd;
-};
-
 function getSearchHistory() {
   if (localStorage.getItem("search-history")) {
     return JSON.parse(localStorage.getItem("search-history"));
   } else {
     return [];
   }
-}
-
-function setSearchHistory(history) {
-  localStorage.setItem("search-history", JSON.stringify(history));
-}
-
-/**
- * check if 2 objects are equal by key-values
- * @param a
- * @param b
- * @returns {boolean}
- */
-function isEquivalent(a, b) {
-  var aProps = Object.getOwnPropertyNames(a);
-  var bProps = Object.getOwnPropertyNames(b);
-  if (aProps.length != bProps.length) {
-    return false;
-  }
-  for (var i = 0; i < aProps.length; i++) {
-    var propName = aProps[i];
-    if (a[propName] !== b[propName]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 // -- user --
