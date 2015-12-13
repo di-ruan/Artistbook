@@ -195,7 +195,7 @@ function showArtistInfo(info) {
     }
 
     if(info.urls && info.urls.official_url) {
-        aboutHtml.push('<li><strong>Homepage: </strong> ' + info.urls.official_url + '</li>');  
+        aboutHtml.push('<li><strong>Homepage: </strong> <a target="_blank" href="' + info.urls.official_url + '">' + info.urls.official_url + '</a></li>');  
     }
 
     aboutHtml.push('</ul>');
@@ -272,7 +272,9 @@ function getTopTracks(artist_id, artist) {
 }
 
 function showTopTracks(tracks) {
-    var songsTabContent = $("#profile-songs-tab-content");   
+    var songsTabContent = $("#profile-songs-tab-content"),
+        first = null;
+
     songsTabContent.empty();
     
     tracks.forEach(function(track){
@@ -313,7 +315,15 @@ function showTopTracks(tracks) {
         });
         
         songsTabContent.append(trackHtml);   
-    });                
+        
+        if (!first) {            
+            first = track;            
+        }
+    }); 
+    
+    if(first){
+        playSong(first, true);
+    }
 }
 
 // TODO

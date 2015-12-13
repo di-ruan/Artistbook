@@ -8,6 +8,7 @@ var sa = {
             about: 'profile-about-tab',
             photos: 'profile-photos-tab',
             songs: 'profile-songs-tab',
+            similarArtists: 'profile-artists-tab',
             following: 'following-tab',
             history: 'history-tab'
         },
@@ -50,6 +51,7 @@ var genre_list = [], style_list = [], mood_list = [];
  * Initializes the events
  */
 $(document).ready(function(){        
+    initFollowWidget();
     initTabs();
     initCollapse();
     initPicModal();
@@ -67,6 +69,31 @@ $(document).ready(function(){
     
     loadArtistHistory();    
 });
+
+
+function initFollowWidget() {
+    var widgetIframe = $('#follow-widget');
+    
+    widgetIframe.click(function(){        
+        getFollowingList(showFollowingList);
+    });
+    
+    /*
+     * Awful hack to "listen" to clicks on the follow widget
+     */
+    function checkClick() {
+        var active = $(document.activeElement);
+        
+        if(active.attr('id') == widgetIframe.attr('id')) {
+            active.blur();            
+            widgetIframe.trigger('click');
+        }
+        
+        setTimeout(checkClick, 200);
+    }
+    
+    checkClick();
+}
 
 function loadProfile(id) {
     var artist = {
