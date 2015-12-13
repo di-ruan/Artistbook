@@ -143,10 +143,14 @@ function getArtistInfo(artist_id, artist) {
 }
 
 function showArtistInfo(info) {    
+    console.log(info);
     var aboutTabContent = $("#profile-about-tab-content");    
     aboutTabContent.empty();
     
-    var center = info.artist_location.location,
+    var aboutHtml = [];
+
+    if(info.artist_location) {
+        var center = info.artist_location.location,
         src = [
             'https://maps.googleapis.com/maps/api/staticmap?center=',
                 center,
@@ -157,17 +161,19 @@ function showArtistInfo(info) {
             '<h4>Location</h4>'
         ];
         
-    if (center) {
-        aboutHtml.push('<div class="x-map-holder">');
-        aboutHtml.push(imgHtml);
-        aboutHtml.push('</div>');
-    } 
+        if (center) {
+            aboutHtml.push('<div class="x-map-holder">');
+            aboutHtml.push(imgHtml);
+            aboutHtml.push('</div>');
+        } 
         
-    aboutHtml.push('<ul class="x-location-list">');
+        aboutHtml.push('<ul class="x-location-list">');
+    }
     
-    if(info.artist_location.location) {
-        aboutHtml.push('<li><strong>City: </strong> ' + info.artist_location.location + '</li>');    
+    if(info.artist_location && info.artist_location.location) {
         aboutHtml.push('<li><strong>Country: </strong> ' + info.artist_location.country + '</li>');    
+        aboutHtml.push('<li><strong>City: </strong> ' + info.artist_location.city + '</li>');
+        aboutHtml.push('<li><strong>Region: </strong> ' + info.artist_location.region + '</li>');
     } 
 
     if(info.hotttnesss_rank) {
@@ -177,15 +183,23 @@ function showArtistInfo(info) {
     if(info.genres && info.genres.length > 0) {
         var genres = "";
         info.genres.forEach(function(genre) {
-             genres += genre.name + "   ";
+             genres += genre.name + ", ";
         });
+        genres = genres.slice(0, -2);
         aboutHtml.push('<li><strong>Genre: </strong> ' + genres + '</li>');  
     }
     
+    if(info.years_active && info.years_active.length > 0) {
+        var strEnd = info.years_active[0].end ? info.years_active[0].end : 'present';
+        aboutHtml.push('<li><strong>Year Active: </strong> ' + info.years_active[0].start + ' - ' + strEnd + '</li>');  
+    }
+
+    if(info.urls && info.urls.official_url) {
+        aboutHtml.push('<li><strong>Homepage: </strong> ' + info.urls.official_url + '</li>');  
+    }
+
     aboutHtml.push('</ul>');
-    
-           
-    
+        
     aboutTabContent.append(aboutHtml.join(''));
 }
 
