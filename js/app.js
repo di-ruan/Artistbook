@@ -40,7 +40,7 @@ var sa = {
 var artist_id2 = "2XBzvyw3fwtZu4iUz12x0G";
 var api_key = "XUYQDKM596JS3A6GC";
 // this token should be replaced every time from http://http://spotartist-web-auth.mybluemix.net/
-var access_token = 'BQCcZeGkKpgDv5LeeQZXcYPNjpXy9Dc6BaEDpAUaq1SWlFjLQnZA1ozGnAlg9m9OEMRj_m25YZoZy2LcvnDm6a1vDqtjmU1wpQdx8mJm0_ZjZd31VoJy3WhnWRcTYS9sh8EnCIS1c_nlCzjy-YT8wh_8lkcykwizWjODYyscL3SyrVWUP2BgsZEHJk8';
+var access_token = 'BQBF5SMOd2qGmuNNkDgpjWZ2dZSxVdytIsW8Fkk9chygTvOihG1-FBSTWuBRCmgbuxiiTMH5o3sLDnDELbwYOjzFsw73UlNHizwSmfFCv_rU8mZAPi9B0WNNolAKx6Xdhjp4M0ilVgY89W_AAuq187hKdEYyPjj7itMgIpRz2YmTDDjWehZXDPoKfwo';
 
 //TODO: autocomplete for searching by genre, style or mood
 // when searching for genre, style or mood, we need have a autocomplete from the list and
@@ -74,8 +74,12 @@ $(document).ready(function(){
 function initFollowWidget() {
     var widgetIframe = $('#follow-widget');
     
-    widgetIframe.click(function(){        
-        getFollowingList(showFollowingList);
+    widgetIframe.click(function(){
+        //set a 500ms delay, otherwise following list may requested before the new artist actually be added.
+        setTimeout(function(){
+            console.log("updated following list");
+            getFollowingList(showFollowingList);
+        }, 500);
     });
     
     /*

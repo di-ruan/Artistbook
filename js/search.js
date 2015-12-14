@@ -5,6 +5,10 @@ $(document).on('click', '#s-result-icon', function () {
   loadProfile(id);
 });
 
+$(document).on('click', '#follow-widget', function () {
+  console.log("clicked on follow widget");
+});
+
 /**
  * search artist from API
  * @param searchTerms
@@ -194,7 +198,7 @@ var showFollowingList = function(artists) {
       '</a>' +
       '</div>' +
       '<div class="media-body s-artist-holder">' +
-      '<h5 class="media-heading">' + a.name + '</h5>' +
+      '<a href="#"><h5 class="media-heading" id="s-result-icon" data-spotifyid="' + a.id + '">' + a.name + '</h5></a>' +
       '</div>' +
       '</div>';
     $('#following-tab-content').append(htmlString);
@@ -249,7 +253,7 @@ var displayVisitHistory = function() {
       '</a>' +
       '</div>' +
       '<div class="media-body s-artist-holder">' +
-      '<h5 class="media-heading">' + a.name + '</h5>' +
+      '<a href="#"><h5 class="media-heading" id="s-result-icon" data-spotifyid="' + a.id + '">' + a.name + '</h5></a>' +
       '</div>' +
       '</div>';
     $h.append(htmlString);
