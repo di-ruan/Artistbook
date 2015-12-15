@@ -455,8 +455,29 @@ function initCollapse() {
 
     handle.click(function(e){
         e.preventDefault();
-        leftPane.toggleClass('x-collapsed');
+        
+        if (leftPane.hasClass('x-collapsed')) {
+            expandSideBar();
+        } else {
+            collapseSideBar();
+        }
     });
+}
+
+function collapseSideBar() {    
+    var leftPane = $('#main-left-pane');    
+    leftPane.addClass('x-collapsed');
+    
+    sa.state.leftPaneCollapsed = true;
+    saveState();
+}
+
+function expandSideBar() {    
+    var leftPane = $('#main-left-pane');
+    leftPane.removeClass('x-collapsed');
+    
+    sa.state.leftPaneCollapsed = false;
+    saveState();
 }
 
 function showArtistHistoryToSearchResults() {
@@ -589,7 +610,11 @@ function loadState() {
     
     sa.state = JSON.parse(stateJson);    
     
-    var state = sa.state;        
+    var state = sa.state;  
+    
+    if (state.leftPaneCollapsed) {
+        collapseSideBar();
+    }
     
     if (state.selectedSearchTab) {
         selectTab(state.selectedSearchTab);
