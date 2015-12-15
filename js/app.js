@@ -226,7 +226,7 @@ function initHelpModal() {
     helpButton.click(function(e){
         e.preventDefault();
         showHelpModal();
-    })
+    });
     
     okButton.click(function(e){
         e.preventDefault();
@@ -379,7 +379,7 @@ function initSearchBar() {
                showArtistHistoryToSearchResults();
                return;
            }
-
+           searchTermObject = {};
            searchTermObject[searchType] = searchTerm;
            doSearch(searchTermObject);
        }, 1000);
@@ -388,9 +388,8 @@ function initSearchBar() {
     $(".dropdown-menu li").click(function(){
         var search_hint = {
             NAME: 'Enter full or partial name of the artist...',
-            GENRE: 'Enter genre of artists you are interested in...',
-            STYLE: 'Enter style of artists you are interested in...',
-            MOOD: 'How do you feel like now?'
+            GENRE: 'Enter genre of artists (pop, funk, jazz, noise, etc)?',
+            MOOD: 'How do you feel like now (cool, happy, peaceful, etc)?'
         };
         var selText = $(this).text();
         $('.active').removeClass('active');
