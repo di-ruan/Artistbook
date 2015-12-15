@@ -41,6 +41,10 @@ function searchArtistByCriteria(searchTerms, next) {
     success: function(response) {
       if(response && response.response && response.response.artists) {
         if (next) {
+          if (response.response.artists.length == 0) {
+              showEmptySearchResultMessage();              
+          }
+            
           sa.state.searchResults = [];
           response.response.artists.forEach(function(e) {
             if (!e || !e.foreign_ids || e.foreign_ids.length <= 0) {
@@ -53,7 +57,7 @@ function searchArtistByCriteria(searchTerms, next) {
               if (err) {
                 return;
               }
-              console.log('img url: ' + imgUrl);
+              
               e.images = [];
               e.images.push({'url' : imgUrl});
               next(e);

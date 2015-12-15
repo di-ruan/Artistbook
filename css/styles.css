@@ -47,7 +47,7 @@ input[type=text] {
     min-height: 300px;
     max-height: 400px;
     height: 60%;
-    z-index: 100;
+    z-index: 200;
     background-color: #fff;
     display: none;
     overflow-x: hidden;
@@ -662,6 +662,10 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 .x-modal-window .x-content-toolbar {
     padding: 10px;
+}
+
+.x-empty-search {
+    margin: 10px;
 }
 
 .s-artist-icon-64 {

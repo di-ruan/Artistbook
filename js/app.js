@@ -29,6 +29,7 @@ var sa = {
         isHelpModalOpen: false,
         leftPaneCollapsed: false,
         searchResults: [],
+        emptySearchResultsDisplayed: false,
         searchResultsExpanded: false,
         pictureModal: {
             open: false,
@@ -60,14 +61,13 @@ $(document).ready(function(){
     initSearchBar();
     initSearchResults();
     initMetadata();
-    
+        
+    loadArtistHistory();  
     var stateLoaded = loadState();
     
     if (!stateLoaded) {        
         loadProfile(sa.config.defaultArtistId);
-    }
-    
-    loadArtistHistory();    
+    }  
 });
 
 
@@ -381,7 +381,7 @@ function initSearchBar() {
            }
            searchTermObject = {};
            searchTermObject[searchType] = searchTerm;
-           doSearch(searchTermObject);
+           doSearch(searchTermObject, searchType);
        }, 1000);
     });
 
@@ -404,9 +404,12 @@ function initSearchBar() {
  * Do search
  * @param searchTerm for now is a string of mood. It is better to make it as json object.
  */
-function doSearch(searchTermObject) {
+function doSearch(searchTermObject, searchType) {
     $('#search-results').empty();
     searchArtistByCriteria(searchTermObject, showArtistSearchResult);
+    
+    sa.state.selectedSearchBy = searchType;
+    saveState();
 }
 
 /**
@@ -426,9 +429,8 @@ function initSearchResults(){
         searchResults = $('#search-results');
 
     searchBar.focus(function(e){
-        e.preventDefault();
-        
-        if (!searchBar.val()) {
+        e.preventDefault();        
+        if (!searchBar.val()) {            
             showArtistHistoryToSearchResults();
         }
         
@@ -464,7 +466,7 @@ function showArtistHistoryToSearchResults() {
     
     searchResults.append('<div class="x-section-header">Recent Searches</div>');
     
-    history.forEach(function(historyArtist) {
+    history.forEach(function(historyArtist) {        
         addArtistToSearchResults(historyArtist, true);
     });
 }
@@ -498,10 +500,36 @@ function addArtistToSearchResults(artist, preventAddToState) {
     
     searchResults.append(html);
     
+    sa.state.emptySearchResultsDisplayed = false;
+    saveState();
+    
     if (!preventAddToState) {
         sa.state.searchResults.push(artist);
         saveState();
     }
+}
+
+function showEmptySearchResultMessage() {
+    var searchResults = $('#search-results'),
+        html = [
+            '<div class="x-empty-search">',
+                '<div>',
+                    '<strong>Your search did not match any artists</strong>',
+                '</div>',
+                '<div>Suggestions:</div>',
+                '<ul class="x-suggestions">',
+                    '<li>Make sure all words are spelled correctly.</li>',
+                    '<li>Try different keywords.</li>',
+                    '<li>Try more general keywords</li>',
+                    '<li>Try fewer keywords.</li>',
+                '</ul>',
+            '</div>'
+        ];
+        
+    sa.state.emptySearchResultsDisplayed = true;
+    searchResults.empty();
+    searchResults.append(html.join(''));
+    saveState();
 }
 
 function addArtistToHistory(artist) {    
@@ -558,9 +586,9 @@ function loadState() {
         return false;
     }
     
-    sa.state = JSON.parse(stateJson);
+    sa.state = JSON.parse(stateJson);    
     
-    var state = sa.state;
+    var state = sa.state;        
     
     if (state.selectedSearchTab) {
         selectTab(state.selectedSearchTab);
@@ -582,6 +610,13 @@ function loadState() {
         searchResults.forEach(function(artist){
             addArtistToSearchResults(artist);
         });                
+    } else if (state.emptySearchResultsDisplayed) {
+        showEmptySearchResultMessage();
+    }
+    
+    if (state.selectedSearchBy) {
+        var btn = $('.input-group-btn li[data-search=' + state.selectedSearchBy + ']');        
+        btn.trigger('click');
     }
     
     if (state.searchResultsExpanded) {

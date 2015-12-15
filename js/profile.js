@@ -273,6 +273,7 @@ function getTopTracks(artist_id, artist) {
 
 function showTopTracks(tracks) {
     var songsTabContent = $("#profile-songs-tab-content"),
+        playWidget = $('#play-widget'),
         first = null;
 
     songsTabContent.empty();
@@ -321,7 +322,8 @@ function showTopTracks(tracks) {
         }
     }); 
     
-    if(first){
+    // Only change songs if it isn't playing
+    if(first && playWidget[0].paused){                                
         playSong(first, true);
     }
 }
