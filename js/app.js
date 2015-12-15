@@ -388,7 +388,7 @@ function initSearchBar() {
     $(".dropdown-menu li").click(function(){
         var search_hint = {
             NAME: 'Enter full or partial name of the artist...',
-            GENRE: 'Enter genre of artists (pop, funk, jazz, noise, etc)?',
+            GENRE: 'Enter genre of artists (pop, funk, jazz, noise, etc)',
             MOOD: 'How do you feel like now (cool, happy, peaceful, etc)?'
         };
         var selText = $(this).text();
@@ -514,14 +514,14 @@ function showEmptySearchResultMessage() {
         html = [
             '<div class="x-empty-search">',
                 '<div>',
-                    '<strong>Your search did not match any artists</strong>',
+                    '<strong>Your search did not match any artist</strong>',
                 '</div>',
                 '<div>Suggestions:</div>',
                 '<ul class="x-suggestions">',
-                    '<li>Make sure all words are spelled correctly.</li>',
-                    '<li>Try different keywords.</li>',
+                    '<li>Make sure all words are spelled correctly</li>',
+                    '<li>Try different keywords</li>',
                     '<li>Try more general keywords</li>',
-                    '<li>Try fewer keywords.</li>',
+                    '<li>Try fewer keywords</li>',
                 '</ul>',
             '</div>'
         ];
