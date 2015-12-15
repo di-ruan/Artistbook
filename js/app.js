@@ -40,7 +40,7 @@ var sa = {
 var artist_id2 = "2XBzvyw3fwtZu4iUz12x0G";
 var api_key = "XUYQDKM596JS3A6GC";
 // this token should be replaced every time from http://http://spotartist-web-auth.mybluemix.net/
-var access_token = 'BQBF5SMOd2qGmuNNkDgpjWZ2dZSxVdytIsW8Fkk9chygTvOihG1-FBSTWuBRCmgbuxiiTMH5o3sLDnDELbwYOjzFsw73UlNHizwSmfFCv_rU8mZAPi9B0WNNolAKx6Xdhjp4M0ilVgY89W_AAuq187hKdEYyPjj7itMgIpRz2YmTDDjWehZXDPoKfwo';
+var access_token = 'BQBalUNYn-o5uOUgQ-Om6xlxoMvRgXyhGzXYDK7eMUiDn3DhDGfFatmQTxkxcaX4hilS5RdQOTvoTeABUo6RAcq269AOfFIcMcQCddxMH6WQhEM_MIX-TBzA_6NRxT-0yBLj3AuHjFZO5sWVl_CNZa4kJlhvNCGOcFIC';
 
 //TODO: autocomplete for searching by genre, style or mood
 // when searching for genre, style or mood, we need have a autocomplete from the list and
