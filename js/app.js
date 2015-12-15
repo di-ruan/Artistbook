@@ -233,12 +233,13 @@ function initHelpModal() {
         hideHelpModal();
     });
     
-    win.click(function(e){
-        e.preventDefault();
-        return false;
-    });
-    
     helpModal.click(function(e){
+        var target = $(e.target);
+       
+        if (target.closest('.x-modal-window').length) {
+            return;
+        }
+        
         e.preventDefault();
         hideHelpModal();
     });
@@ -246,7 +247,7 @@ function initHelpModal() {
     x.click(function(e){
         e.preventDefault();
         hideHelpModal();
-    })
+    });
 }
 
 /**
