@@ -43,7 +43,6 @@ var api_key = "XUYQDKM596JS3A6GC";
 // this token should be replaced every time from http://http://spotartist-web-auth.mybluemix.net/
 var access_token = 'BQBOTxiOPvkoDEarECLhc1_zk3c1cHsTxEZDiRaNbu9ZnEMjQXi3Y2MmZbm93qk1dl1kDxgknMhTI16rOQjDZXUOLH84X05ux5CCNTi8OtP98pd3PcmomQaY9qYfx7lzh79kPby6_93rO7B1MbJRXR6Fr8_lZVhflBAjDkqf071wBdMG99Yc5heNzZA';
 
-//TODO: autocomplete for searching by genre, style or mood
 // when searching for genre, style or mood, we need have a autocomplete from the list and
 // let the user to select what they want.
 var genre_list = [], style_list = [], mood_list = [];
