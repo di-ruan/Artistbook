@@ -47,7 +47,7 @@ input[type=text] {
     min-height: 300px;
     max-height: 400px;
     height: 60%;
-    z-index: 100;
+    z-index: 200;
     background-color: #fff;
     display: none;
     overflow-x: hidden;
@@ -618,12 +618,16 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
     background-color: #fff;
     max-width: 600px;
     min-height: 300px;   
-    max-height: 400px;
+    max-height: 600px;
     border-radius: 15px;
     overflow: hidden;
     margin: 0 auto;
     position: relative;
     padding-bottom: 50px;
+}
+
+.x-modal-window h3 {
+    margin-top: 0;
 }
 
 .x-modal-window .x-title-toolbar {
@@ -662,6 +666,10 @@ ul.x-tabs li.x-tab.x-active .x-active-marker {
 
 .x-modal-window .x-content-toolbar {
     padding: 10px;
+}
+
+.x-empty-search {
+    margin: 10px;
 }
 
 .s-artist-icon-64 {

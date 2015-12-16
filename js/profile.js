@@ -273,6 +273,7 @@ function getTopTracks(artist_id, artist) {
 
 function showTopTracks(tracks) {
     var songsTabContent = $("#profile-songs-tab-content"),
+        playWidget = $('#play-widget'),
         first = null;
 
     songsTabContent.empty();
@@ -321,12 +322,12 @@ function showTopTracks(tracks) {
         }
     }); 
     
-    if(first){
+    // Only change songs if it isn't playing
+    if(first && playWidget[0].paused){                                
         playSong(first, true);
     }
 }
 
-// TODO
 function playSong(track, preventPlay) {
     var songName = track.name,
         trackUrl = track.preview_url,
@@ -462,12 +463,6 @@ function addSimilarArtists(artists) {
     });        
 }
 
-/*
- *  TODO Add commas to number
- *  e.g. 
- *  input: 12345
- *  output: "12,345" 
- */
 function formatNumber(number) {
     return "" + number;
 }
