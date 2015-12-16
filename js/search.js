@@ -53,7 +53,7 @@ function searchArtistByCriteria(searchTerms, next) {
               if (err) {
                 return;
               }
-              console.log('img url: ' + imgUrl);
+              //console.log('img url: ' + imgUrl);
               e.images = [];
               e.images.push({'url' : imgUrl});
               next(e);
