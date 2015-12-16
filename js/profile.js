@@ -328,7 +328,6 @@ function showTopTracks(tracks) {
     }
 }
 
-// TODO
 function playSong(track, preventPlay) {
     var songName = track.name,
         trackUrl = track.preview_url,
@@ -464,12 +463,6 @@ function addSimilarArtists(artists) {
     });        
 }
 
-/*
- *  TODO Add commas to number
- *  e.g. 
- *  input: 12345
- *  output: "12,345" 
- */
 function formatNumber(number) {
     return "" + number;
 }
